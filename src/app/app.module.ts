@@ -7,6 +7,8 @@ import { SideMenuComponent } from './components/side-menu/side-menu.component';
 import { HelloMessageComponent } from './components/hello-message/hello-message.component';
 import { CategoryCardComponent } from './components/category-card/category-card.component';
 import { PostPreviewComponent } from './components/post-preview/post-preview.component';
+import { HomePageComponent } from './components/home-page/home-page.component';
+import { CommunityPageComponent } from './components/community-page/community-page.component';
 
 @NgModule({
   declarations: [
@@ -14,7 +16,9 @@ import { PostPreviewComponent } from './components/post-preview/post-preview.com
     SideMenuComponent,
     HelloMessageComponent,
     CategoryCardComponent,
-    PostPreviewComponent
+    PostPreviewComponent,
+    HomePageComponent,
+    CommunityPageComponent
   ],
   imports: [
     BrowserModule,
