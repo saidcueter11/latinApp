@@ -118,6 +118,21 @@ private populateTables(): void {
         "(4,'Said Cueter','scueter','12345', '12/02/2022'  )," +
         "(5,'Ruben Munoz','rmunoz','12345', '12/02/2022'  );";
 
+      let notifications = "INSERT OR IGNORE INTO notifications (notificationID,userID,description,creationDate) VALUES " +
+
+        '(1,5, "Someone has commented your post!", "13/12/2022" ),' +
+        '(2,4, "Someone has liked your post!", "15/12/2022" ),' +
+        '(3,3, "Someone has commented your post!", "15/12/2022" ),' +
+        '(4,2, "Someone has commented your post!", "16/12/2022" ),' +
+        '(5,1, "Someone has liked your post!", "16/12/2022" ) ;';
+
+      let favorites = "INSERT OR IGNORE INTO favorites (favoriteId,userID,categoryID) VALUES " +
+        "(1,5,1,2,3 )," +
+        "(2,4,4,5,6 )," +
+        "(3,3,7,8,1 )," +
+        "(4,2,2,3,4 )," +
+        "(5,1,5,6,7 );";
+
       let categories = 'INSERT OR IGNORE INTO categories (categoryId,name) VALUES ' +
         '(1,"Food" ),' +
         '(2,"Transportation" ),' +
@@ -130,11 +145,11 @@ private populateTables(): void {
 
       let posts = 'INSERT OR IGNORE INTO posts (postId,userId,categoryId,phone,email,description,urlImage,openDate,closeDate,creationDate) VALUES ' +
 
-        '(1,1,3, 5483335570, "jaime@latinapp.com", "I am looking for a junior web developer to run my new business, please submit a copy of your CV to my email in the given times", XXXX, "14/12/2022", "16/12/2022", "12/12/2022" ),' +
-        '(2,2,1, 5482235570, "emmanuel@latinapp.com", "I am selling tacos, burritos, enchiladas, and chilaquiles in Waterloo. Please contact me to the number 5486661247", XXXX, "20/12/2022", "25/12/2022", "10/12/2022" ),' +
-        '(3,3,4, 5483335571, "juan@latinapp.com", "I need someone to help me with some pieces of advice about finding a place where I can get my SIN number. Please call me 5483335571", XXXX, "12/12/2022", "13/12/2022", "12/12/2022" ),' +
-        '(4,4,6, 5487854422, "said@latinapp.com", "Does anybody know where can I fill mi taxes for 2023?", XXXX, "15/12/2022", "25/12/2022", "15/12/2022" ),' +
-        '(5,5,2, 3569867758, "ruben@latinapp.com", "I am planning to travel to my origin country next week. Do you know someone who can take me up there?", XXXX, "01/01/2023", "27/01/2023", "15/12/2023" ) ;';
+        '(1,1,3, 5483335570, "jaime@latinapp.com", "I am looking for a junior web developer to run my new business, please submit a copy of your CV to my email in the given times", "XXXX", "14/12/2022", "16/12/2022", "12/12/2022" ),' +
+        '(2,2,1, 5482235570, "emmanuel@latinapp.com", "I am selling tacos, burritos, enchiladas, and chilaquiles in Waterloo. Please contact me to the number 5486661247", "XXXX", "20/12/2022", "25/12/2022", "10/12/2022" ),' +
+        '(3,3,4, 5483335571, "juan@latinapp.com", "I need someone to help me with some pieces of advice about finding a place where I can get my SIN number. Please call me 5483335571", "XXXX", "12/12/2022", "13/12/2022", "12/12/2022" ),' +
+        '(4,4,6, 5487854422, "said@latinapp.com", "Does anybody know where can I fill mi taxes for 2023?", "XXXX", "15/12/2022", "25/12/2022", "15/12/2022" ),' +
+        '(5,5,2, 3569867758, "ruben@latinapp.com", "I am planning to travel to my origin country next week. Do you know someone who can take me up there?", "XXXX", "01/01/2023", "27/01/2023", "15/12/2023" ) ;';
 
       let comments = 'INSERT OR IGNORE INTO comments (commentId,userId,postId,description,creationDate) VALUES ' +
 
@@ -158,10 +173,12 @@ private populateTables(): void {
         '(5,2,1,0,"15/12/2022" ) ;';
 
       tx.executeSql(users, options, () => {console.info("Success: Table users populated");}, DatabaseService.errorHandler);
+      tx.executeSql(notifications, options, () => {console.info("Success: Table users populated");}, DatabaseService.errorHandler);
+      tx.executeSql(favorites, options, () => {console.info("Success: Table favorites populated");}, DatabaseService.errorHandler);
       tx.executeSql(categories, options, () => {console.info("Success: Table categories populated");}, DatabaseService.errorHandler);
-      tx.executeSql(posts, options, () => {console.info("Success: Table categories populated");}, DatabaseService.errorHandler);
-      tx.executeSql(comments, options, () => {console.info("Success: Table categories populated");}, DatabaseService.errorHandler)
-      tx.executeSql(likes, options, () => {console.info("Success: Table categories populated");}, DatabaseService.errorHandler);
+      tx.executeSql(posts, options, () => {console.info("Success: Table posts populated");}, DatabaseService.errorHandler);
+      tx.executeSql(comments, options, () => {console.info("Success: Table comments populated");}, DatabaseService.errorHandler)
+      tx.executeSql(likes, options, () => {console.info("Success: Table likes populated");}, DatabaseService.errorHandler);
     }
 
     this.db.transaction(txFunction, DatabaseService.errorHandler, () => {console.log("Success: Population transaction successful");});
