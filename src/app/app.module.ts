@@ -7,9 +7,12 @@ import { SideMenuComponent } from './components/side-menu/side-menu.component';
 import { HelloMessageComponent } from './components/hello-message/hello-message.component';
 import { CategoryCardComponent } from './components/category-card/category-card.component';
 import { PostPreviewComponent } from './components/post-preview/post-preview.component';
-import { HomePageComponent } from './components/home-page/home-page.component';
+import { HomePageComponent } from './pages/home-page/home-page.component';
 import { CommunityPageComponent } from './components/community-page/community-page.component';
 import {DatabaseService} from "./services/database/database.service";
+import { LoginComponent } from './pages/login/login.component';
+import { RegisterComponent } from './pages/register/register.component';
+import {FormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -19,11 +22,14 @@ import {DatabaseService} from "./services/database/database.service";
     CategoryCardComponent,
     PostPreviewComponent,
     HomePageComponent,
-    CommunityPageComponent
+    CommunityPageComponent,
+    LoginComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule
   ],
   providers: [DatabaseService],
   bootstrap: [AppComponent]
