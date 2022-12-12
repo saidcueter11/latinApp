@@ -9,6 +9,7 @@ import { CategoryCardComponent } from './components/category-card/category-card.
 import { PostPreviewComponent } from './components/post-preview/post-preview.component';
 import { HomePageComponent } from './components/home-page/home-page.component';
 import { CommunityPageComponent } from './components/community-page/community-page.component';
+import {DatabaseService} from "./services/database/database.service";
 
 @NgModule({
   declarations: [
@@ -24,7 +25,7 @@ import { CommunityPageComponent } from './components/community-page/community-pa
     BrowserModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [DatabaseService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
