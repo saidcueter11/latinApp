@@ -107,6 +107,26 @@ export class DatabaseService {
     });
   }
 
+private populateTables(): void {
+    function txFunction(tx: any): void {
+      let options: string[] = [];
+
+      let users = "INSERT OR IGNORE INTO users (userId,name,user,pass,creationDate) VALUES " +
+        "(1,'Jaime Sanchez','jsanchez','12345', '12/02/2022'  )," +
+        "(2,'Ruben Munoz','rmunoz','12345', '12/02/2022'  );";
+
+      let categories = 'INSERT OR IGNORE INTO categories (categoryId,name) VALUES ' +
+        '(1,"Transportation"),' +
+        '(2,"Food") ;';
+
+
+      tx.executeSql(users, options, () => {console.info("Success: Table users populated");}, DatabaseService.errorHandler);
+      tx.executeSql(categories, options, () => {console.info("Success: Table categories populated");}, DatabaseService.errorHandler);
+    }
+
+    this.db.transaction(txFunction, DatabaseService.errorHandler, () => {console.log("Success: Population transaction successful");});
+  }
+
   public initDB(): void {
     if (this.db == null) {
       try {
@@ -114,6 +134,7 @@ export class DatabaseService {
         this.createDatabase();
         //create tables
         this.createTables();
+        this.populateTables();
       } catch (e) {
         console.error("Error in initDB(): " + e);
       }
