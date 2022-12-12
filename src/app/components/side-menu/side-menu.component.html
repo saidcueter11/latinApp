@@ -1,41 +1,36 @@
-<nav class="navbar bg-light fixed-top">
+<nav class="navbar fixed-top">
   <div class="container-fluid">
-    <a class="navbar-brand" href="#">Latin App</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
-      aria-controls="offcanvasNavbar">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+    <a class="navbar-brand" href="#" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar">
+      <svg width="60" height="60" viewBox="0 0 205 225" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path fill-rule="evenodd" clip-rule="evenodd"
+          d="M0 31.4519C0 13.0972 12.8208 0.0396446 31.1755 0.0142295C64.7375 -0.0322425 119.388 0.0424402 164.623 0.132412C186.676 0.176275 204.5 18.0694 204.5 40.1222V184.721C204.5 206.812 186.591 224.721 164.5 224.721H40C17.9086 224.721 0 206.812 0 184.721V31.4519ZM200 45.1113C200 23.0586 182.167 5.16551 160.115 5.12201C118.322 5.03958 68.5963 4.97228 37.1589 5.01146C18.8177 5.03432 6 18.0711 6 36.4124V179C6 201.091 23.9086 219 46 219H160C182.091 219 200 201.091 200 179V45.1113Z"
+          fill="#009BD3" />
+        <path
+          d="M40.2792 109.541L40.0191 41.019C40.0085 38.2502 42.2486 36 45.0174 36H71.485C74.2838 36 76.5439 38.2972 76.5974 41.0955L77.9145 110.026C77.9714 113.003 78.2937 115.968 78.8776 118.888L79.4522 121.761C80.4723 126.861 82.5704 131.685 85.6061 135.908C90.0877 142.144 96.4212 146.807 103.706 149.235L104.8 149.6C107.592 150.531 110.477 151.151 113.404 151.449L121.236 152.249C129.365 153.078 137.32 155.137 144.831 158.356C155.807 163.06 165.602 170.141 173.509 179.09L174.403 180.101C176.831 182.848 174.971 187.17 171.305 187.259C153.857 187.681 126.986 187.999 116 187H109.999C96.3155 187 82.9466 182.892 71.6235 175.209C64.6026 170.445 58.526 164.409 53.7126 157.421C48.3004 149.565 44.5863 140.657 42.8175 131.283L41.8797 126.312C40.8363 120.782 40.3006 115.169 40.2792 109.541Z"
+          fill="#009BD3" />
+      </svg>
+    </a>
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
       <div class="offcanvas-header">
-        <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Offcanvas</h5>
+        <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Menu</h5>
         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
       </div>
       <div class="offcanvas-body">
         <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Home</a>
+            <a class="nav-link active" aria-current="page" href="#" data-bs-toggle="offcanvas"
+              data-bs-target="#offcanvasNavbar">Home</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Link</a>
+            <a class="nav-link" href="#" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar">Community</a>
           </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Dropdown
-            </a>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#">Action</a></li>
-              <li><a class="dropdown-item" href="#">Another action</a></li>
-              <li>
-                <hr class="dropdown-divider">
-              </li>
-              <li><a class="dropdown-item" href="#">Something else here</a></li>
-            </ul>
+          <li class="nav-item">
+            <a class="nav-link" href="#" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar">Settings</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar">About</a>
           </li>
         </ul>
-        <form class="d-flex mt-3" role="search">
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-success" type="submit">Search</button>
-        </form>
       </div>
     </div>
   </div>
