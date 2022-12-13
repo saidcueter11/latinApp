@@ -1,7 +1,7 @@
-<nav class="navbar fixed-top" id="navBar">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="#" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar">
-      <svg width="60" height="60" viewBox="0 0 205 225" fill="none" xmlns="http://www.w3.org/2000/svg">
+<nav class="navbar fixed-top bg-white" id="navBar">
+  <div class="container-fluid px-3">
+    <a class="navbar-brand" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar">
+      <svg width="43" height="43" viewBox="0 0 205 225" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path fill-rule="evenodd" clip-rule="evenodd"
           d="M0 31.4519C0 13.0972 12.8208 0.0396446 31.1755 0.0142295C64.7375 -0.0322425 119.388 0.0424402 164.623 0.132412C186.676 0.176275 204.5 18.0694 204.5 40.1222V184.721C204.5 206.812 186.591 224.721 164.5 224.721H40C17.9086 224.721 0 206.812 0 184.721V31.4519ZM200 45.1113C200 23.0586 182.167 5.16551 160.115 5.12201C118.322 5.03958 68.5963 4.97228 37.1589 5.01146C18.8177 5.03432 6 18.0711 6 36.4124V179C6 201.091 23.9086 219 46 219H160C182.091 219 200 201.091 200 179V45.1113Z"
           fill="#009BD3" />
@@ -11,7 +11,7 @@
       </svg>
     </a>
     <a>
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="30" height="30">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="26" height="26">
         <path fill="#009BD3"
           d="M256 32V49.88C328.5 61.39 384 124.2 384 200V233.4C384 278.8 399.5 322.9 427.8 358.4L442.7 377C448.5 384.2 449.6 394.1 445.6 402.4C441.6 410.7 433.2 416 424 416H24C14.77 416 6.365 410.7 2.369 402.4C-1.628 394.1-.504 384.2 5.26 377L20.17 358.4C48.54 322.9 64 278.8 64 233.4V200C64 124.2 119.5 61.39 192 49.88V32C192 14.33 206.3 0 224 0C241.7 0 256 14.33 256 32V32zM216 96C158.6 96 112 142.6 112 200V233.4C112 281.3 98.12 328 72.31 368H375.7C349.9 328 336 281.3 336 233.4V200C336 142.6 289.4 96 232 96H216zM288 448C288 464.1 281.3 481.3 269.3 493.3C257.3 505.3 240.1 512 224 512C207 512 190.7 505.3 178.7 493.3C166.7 481.3 160 464.1 160 448H288z" />
       </svg>
@@ -24,17 +24,20 @@
       <div class="offcanvas-body">
         <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#" data-bs-toggle="offcanvas"
+            <a class="nav-link active" aria-current="page" routerLink="/home" data-bs-toggle="offcanvas"
               data-bs-target="#offcanvasNavbar">Home</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar">Community</a>
+            <a class="nav-link" routerLink="/community" data-bs-toggle="offcanvas"
+              data-bs-target="#offcanvasNavbar">Community</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar">Settings</a>
+            <a class="nav-link" routerLink="settings" data-bs-toggle="offcanvas"
+              data-bs-target="#offcanvasNavbar">Settings</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar">About</a>
+            <a class="nav-link" routerLink="about" data-bs-toggle="offcanvas"
+              data-bs-target="#offcanvasNavbar">About</a>
           </li>
         </ul>
       </div>

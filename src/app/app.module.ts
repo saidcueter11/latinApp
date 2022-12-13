@@ -9,10 +9,13 @@ import { CategoryCardComponent } from './components/category-card/category-card.
 import { PostPreviewComponent } from './components/post-preview/post-preview.component';
 import { HomePageComponent } from './pages/home-page/home-page.component';
 import { CommunityPageComponent } from './components/community-page/community-page.component';
-import {DatabaseService} from "./services/database/database.service";
+import { DatabaseService } from "./services/database/database.service";
 import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
-import {FormsModule} from "@angular/forms";
+import { FormsModule } from "@angular/forms";
+import { PostPageComponent } from './pages/post-page/post-page.component';
+import { CommentsCardComponent } from './components/comments-card/comments-card.component';
+import { AppContainerComponent } from './components/app-container/app-container.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +27,10 @@ import {FormsModule} from "@angular/forms";
     HomePageComponent,
     CommunityPageComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    PostPageComponent,
+    CommentsCardComponent,
+    AppContainerComponent
   ],
   imports: [
     BrowserModule,
