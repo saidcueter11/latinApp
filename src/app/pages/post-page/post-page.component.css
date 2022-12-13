@@ -1,0 +1,17 @@
+#description-container {
+  z-index: 100;
+}
+
+#title-container {
+  z-index: -10;
+  max-height: 200px
+}
+
+
+#title-container>div {
+  max-height: 200px;
+}
+
+img {
+  max-height: 200px;
+}
