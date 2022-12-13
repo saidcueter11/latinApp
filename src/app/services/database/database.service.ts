@@ -11,7 +11,11 @@ declare function openDatabase(shortName: string, version: string, displayName: s
   providedIn: 'root'
 })
 export class DatabaseService {
-  private db: any = null;
+  get db(): any {
+    return this._db;
+  }
+
+  private _db: any = null;
 
   constructor() {
   }
@@ -26,7 +30,7 @@ export class DatabaseService {
     let displayName = "DB for LatingApp";
     let dbSize = 2 * 1024 * 1024;
 
-    this.db = openDatabase(shortName, version, displayName, dbSize, () => {
+    this._db = openDatabase(shortName, version, displayName, dbSize, () => {
       console.log("Success: Database created successfully");
     });
   }
@@ -93,21 +97,35 @@ export class DatabaseService {
         "FOREIGN KEY(postId) REFERENCES posts(postId));";
 
 
-      tx.executeSql(userTable, options, () => {console.info("Success: Table users created");}, DatabaseService.errorHandler);
-      tx.executeSql(notificationTable, options, () => {console.info("Success: Table notification created");}, DatabaseService.errorHandler);
-      tx.executeSql(categoryTable, options, () => {console.info("Success: Table categories created");}, DatabaseService.errorHandler);
-      tx.executeSql(favoriteTable, options, () => {console.info("Success: Table favorites created");}, DatabaseService.errorHandler);
-      tx.executeSql(postTable, options, () => {console.info("Success: Table posts created");}, DatabaseService.errorHandler);
-      tx.executeSql(commentTable, options, () => {console.info("Success: Table comments created");}, DatabaseService.errorHandler);
-      tx.executeSql(likeTable, options, () => {console.info("Success: Table likes created");}, DatabaseService.errorHandler);
+      tx.executeSql(userTable, options, () => {
+        console.info("Success: Table users created");
+      }, DatabaseService.errorHandler);
+      tx.executeSql(notificationTable, options, () => {
+        console.info("Success: Table notification created");
+      }, DatabaseService.errorHandler);
+      tx.executeSql(categoryTable, options, () => {
+        console.info("Success: Table categories created");
+      }, DatabaseService.errorHandler);
+      tx.executeSql(favoriteTable, options, () => {
+        console.info("Success: Table favorites created");
+      }, DatabaseService.errorHandler);
+      tx.executeSql(postTable, options, () => {
+        console.info("Success: Table posts created");
+      }, DatabaseService.errorHandler);
+      tx.executeSql(commentTable, options, () => {
+        console.info("Success: Table comments created");
+      }, DatabaseService.errorHandler);
+      tx.executeSql(likeTable, options, () => {
+        console.info("Success: Table likes created");
+      }, DatabaseService.errorHandler);
     }
 
-    this.db.transaction(txFunction, DatabaseService.errorHandler, () => {
+    this._db.transaction(txFunction, DatabaseService.errorHandler, () => {
       console.log("Success: Table creation transaction successful");
     });
   }
 
-private populateTables(): void {
+  private populateTables(): void {
     function txFunction(tx: any): void {
       let options: string[] = [];
 
@@ -182,20 +200,36 @@ private populateTables(): void {
         '(4,3,2,1,"15/12/2022" ),' +
         '(5,2,1,0,"15/12/2022" ) ;';
 
-      tx.executeSql(users, options, () => {console.info("Success: Table users populated");}, DatabaseService.errorHandler);
-      tx.executeSql(notifications, options, () => {console.info("Success: Table users populated");}, DatabaseService.errorHandler);
-      tx.executeSql(favorites, options, () => {console.info("Success: Table favorites populated");}, DatabaseService.errorHandler);
-      tx.executeSql(categories, options, () => {console.info("Success: Table categories populated");}, DatabaseService.errorHandler);
-      tx.executeSql(posts, options, () => {console.info("Success: Table posts populated");}, DatabaseService.errorHandler);
-      tx.executeSql(comments, options, () => {console.info("Success: Table comments populated");}, DatabaseService.errorHandler)
-      tx.executeSql(likes, options, () => {console.info("Success: Table likes populated");}, DatabaseService.errorHandler);
+      tx.executeSql(users, options, () => {
+        console.info("Success: Table users populated");
+      }, DatabaseService.errorHandler);
+      tx.executeSql(notifications, options, () => {
+        console.info("Success: Table users populated");
+      }, DatabaseService.errorHandler);
+      tx.executeSql(favorites, options, () => {
+        console.info("Success: Table favorites populated");
+      }, DatabaseService.errorHandler);
+      tx.executeSql(categories, options, () => {
+        console.info("Success: Table categories populated");
+      }, DatabaseService.errorHandler);
+      tx.executeSql(posts, options, () => {
+        console.info("Success: Table posts populated");
+      }, DatabaseService.errorHandler);
+      tx.executeSql(comments, options, () => {
+        console.info("Success: Table comments populated");
+      }, DatabaseService.errorHandler)
+      tx.executeSql(likes, options, () => {
+        console.info("Success: Table likes populated");
+      }, DatabaseService.errorHandler);
     }
 
-    this.db.transaction(txFunction, DatabaseService.errorHandler, () => {console.log("Success: Population transaction successful");});
+    this._db.transaction(txFunction, DatabaseService.errorHandler, () => {
+      console.log("Success: Population transaction successful");
+    });
   }
 
   public initDB(): void {
-    if (this.db == null) {
+    if (this._db == null) {
       try {
         //create database
         this.createDatabase();
