@@ -7,6 +7,7 @@ import { AuthGuard } from "./guards/auth.guard";
 import { HomePageComponent } from "./pages/home-page/home-page.component";
 import { LoginComponent } from "./pages/login/login.component";
 import { RegisterComponent } from "./pages/register/register.component";
+import { MyPostsPageComponent } from './pages/my-posts-page/my-posts-page.component';
 
 const routes: Routes = [
 
@@ -15,7 +16,8 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'home', component: HomePageComponent, canActivate: [AuthGuard] },
   { path: 'post', component: PostPageComponent },
-  { path: 'community', component: CommunityPageComponent }
+  { path: 'community', component: CommunityPageComponent },
+  { path: 'posts', component: MyPostsPageComponent }
 ];
 
 @NgModule({

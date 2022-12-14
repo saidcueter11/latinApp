@@ -8,9 +8,9 @@ describe('CommunityPageComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CommunityPageComponent ]
+      declarations: [CommunityPageComponent]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(CommunityPageComponent);
     component = fixture.componentInstance;

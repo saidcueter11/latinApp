@@ -1,10 +1,14 @@
 <app-app-container>
   <section class="py-5 text-center container ">
-
+    <!-- {{user.name}} -->
     <app-hello-message></app-hello-message>
-    <div *ngFor="let post of posts">
-      <app-post-preview [post]="post"></app-post-preview>
+    <div *ngFor="let category of categories">
+      <app-category-card [category]="category.name"></app-category-card>
     </div>
+    <p *ngIf="noPost != ''; postList">{{noPost}}</p>
+    <ng-template #postList *ngFor="let post of posts">
+      <app-post-preview [post]="post"></app-post-preview>
+    </ng-template>
 
   </section>
 </app-app-container>

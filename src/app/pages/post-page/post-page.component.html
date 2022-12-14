@@ -7,19 +7,9 @@
 <section class="container-fluid py-2">
   <div class="">
     <div class="mt-4 px-3">
-      <h2 class="text-center">Title</h2>
-      <p class="text-start">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Rem obcaecati ullam ab
-        maxime
-        quos
-        explicabo
-        dolores
-        nobis optio aspernatur, minus, distinctio corrupti quaerat molestiae praesentium pariatur dicta debitis, animi
-        totam.
-        Quis debitis obcaecati quae vitae ducimus fugiat fugit? Totam in facere, inventore sapiente repellendus culpa
-        enim
-        amet itaque omnis! Numquam eos quibusdam ad officia animi dolorem accusantium perspiciatis inventore rerum.
-      </p>
-      <app-category-card></app-category-card>
+      <h2 class="text-center">{{post.title}}</h2>
+      <p class="text-start">{{post.description}}</p>
+      <app-category-card [category]="post.category"></app-category-card>
     </div>
   </div>
 

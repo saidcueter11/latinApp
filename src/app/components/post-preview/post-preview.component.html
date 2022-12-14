@@ -1,11 +1,20 @@
-<a routerLink="/post" class="card mt-3">
-  <div class="card-body pb-0">
-    <h2 class="card-title">{{post.title}}</h2>
-    <p class="card-text">{{post.description}}</p>
-    <div class="d-flex flex-row gap-2 align-items-center">
-      <p class="badge bg-primary col">{{post.userName}}</p>
-      <p class="badge bg-primary col">{{post.creationDate}}</p>
-      <p class="badge bg-primary col">{{post.category}}</p>
+<a [routerLink]="['/post', {post: obj}]" class="card mt-3">
+  <div class="card-body pb-0 d-flex">
+    <div>
+      <div class="row">
+        <h2 class="card-title">{{post.title}}</h2>
+        <p class="text-truncate overflow-hidden text-start" style=" display: -webkit-box !important;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        white-space: normal; max-width: 200px;">{{post.description}}</p>
+      </div>
+      <div class="d-flex">
+        <app-category-card [category]="post.category"></app-category-card>
+      </div>
+    </div>
+    <div class="">
+      <img class="rounded-4" src="https://source.unsplash.com/random/100x100" />
+      <span>{{post.userName}}</span>
     </div>
   </div>
 </a>

@@ -14,8 +14,9 @@
       <app-category-card></app-category-card>
       <app-category-card></app-category-card>
     </div>
-    <app-post-preview></app-post-preview>
-    <app-post-preview></app-post-preview>
-    <app-post-preview></app-post-preview>
+
+    <div *ngFor="let post of posts">
+      <app-post-preview [post]="post"></app-post-preview>
+    </div>
   </section>
 </app-app-container>
