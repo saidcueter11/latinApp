@@ -11,8 +11,11 @@ export class PostPreviewComponent implements OnInit {
   @Input() post: PostModel
   obj: string
 
+  randomUserImg: string = ""
+
   ngOnInit (): void {
     this.obj = JSON.stringify(this.post)
+    this.randomUserImg = `https://randomuser.me/api/portraits/women/${this.post.userId}.jpg`
     console.log(this.post)
   }
 }

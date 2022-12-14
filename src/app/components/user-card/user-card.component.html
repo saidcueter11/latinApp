@@ -1,0 +1,16 @@
+<div [ngSwitch]="page">
+  <div *ngSwitchCase="'community'" class="d-flex align-items-center w-100 justify-content-between">
+    <div class="d-flex align-items-center gap-2">
+      <img class="rounded-circle" style="width: 40px;" [src]="randomUserImg" />
+      <p class="m-0">{{userName}}</p>
+    </div>
+    <app-category-card *ngIf="category != undefined" [category]="category"></app-category-card>
+  </div>
+
+  <div *ngSwitchCase="'post'">
+    <div class="d-flex align-items-center flex-column gap-3">
+      <img class="rounded-circle" style="width: 80px;" [src]="randomUserImg" />
+      <h6>{{userName}}</h6>
+    </div>
+  </div>
+</div>

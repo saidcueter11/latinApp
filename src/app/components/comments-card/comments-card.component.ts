@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-comments-card',
@@ -6,5 +6,11 @@ import { Component } from '@angular/core';
   styleUrls: ['./comments-card.component.css']
 })
 export class CommentsCardComponent {
+  expand: boolean = true
 
+
+  toggleCollapse () {
+    this.expand = !this.expand
+    console.log(this.expand)
+  }
 }

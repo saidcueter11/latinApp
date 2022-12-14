@@ -20,7 +20,11 @@ import { PostPageComponent } from './pages/post-page/post-page.component';
 import { CommentsCardComponent } from './components/comments-card/comments-card.component';
 import { AppContainerComponent } from './components/app-container/app-container.component';
 import { SplashScreenComponent } from './components/splash-screen/splash-screen.component';
-import { MyPostsPageComponent } from './pages/my-posts-page/my-posts-page.component'
+import { MyPostsPageComponent } from './pages/my-posts-page/my-posts-page.component';
+import { UserCardComponent } from './components/user-card/user-card.component';
+import { LikeSvgComponent } from './components/svgComponent/like-svg/like-svg.component';
+import { DislikeSvgComponent } from './components/svgComponent/dislike-svg/dislike-svg.component';
+import { TruncateTextComponent } from './components/truncate-text/truncate-text.component'
 
 
 @NgModule({
@@ -40,6 +44,10 @@ import { MyPostsPageComponent } from './pages/my-posts-page/my-posts-page.compon
     MyPostsPageComponent,
     AppContainerComponent,
     SplashScreenComponent,
+    UserCardComponent,
+    LikeSvgComponent,
+    DislikeSvgComponent,
+    TruncateTextComponent,
   ],
   imports: [
     BrowserModule,

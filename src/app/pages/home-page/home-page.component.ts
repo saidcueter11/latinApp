@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { CategoryModel } from 'src/app/models/category';
 import { PostModel } from 'src/app/models/post';
+import { CategoryModel } from 'src/app/models/category';
 import { UserModel } from 'src/app/models/user';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { DALService } from 'src/app/services/database/dal.service';
