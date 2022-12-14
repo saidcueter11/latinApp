@@ -9,7 +9,6 @@ import {FavoriteModel} from "../../models/favorite";
 })
 export class AuthService {
 
-
   public token: string;
   private _user: UserModel;
 
@@ -17,7 +16,7 @@ export class AuthService {
     this.readToken();
   }
 
-  user(): UserModel {
+  get user(): UserModel {
     return this._user;
   }
 
