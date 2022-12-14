@@ -73,7 +73,8 @@ export class DALService {
           " (CASE WHEN l.type = 0 AND u.userId = ? THEN 0 WHEN l.type = 1 THEN 1 ELSE null END)as userLikesIt" +
           " FROM posts p INNER JOIN categories c ON c.categoryId = p.categoryId " +
           " INNER JOIN users u ON u.userId = p.userId " +
-          " INNER JOIN likes l ON l.postId = p.postId " +
+          " LEFT JOIN likes l ON l.postId = p.postId" +
+          " GROUP BY p.postId" +
           " WHERE p.categoryId IN (SELECT categoryId FROM favorites WHERE userId=? );";
         tx.executeSql(sql, options, (tx: any, results: { rows: string | any[]; }) => {
           if (results.rows.length > 0 && results.rows[0].postId != null) {
@@ -101,7 +102,8 @@ export class DALService {
           " FROM posts p " +
           " INNER JOIN categories c ON c.categoryId = p.categoryId " +
           " INNER JOIN users u ON u.userId = p.userId " +
-          " INNER JOIN likes l ON l.postId = p.postId " +
+          " LEFT JOIN likes l ON l.postId = p.postId" +
+          " GROUP BY p.postId" +
           " WHERE p.userId=? ;";
         tx.executeSql(sql, options, (tx: any, results: { rows: string | any[]; }) => {
           if (results.rows.length > 0 && results.rows[0].postId != null) {
@@ -129,7 +131,8 @@ export class DALService {
           " FROM posts p " +
           " INNER JOIN categories c ON c.categoryId = p.categoryId " +
           " INNER JOIN users u ON u.userId = p.userId " +
-          " INNER JOIN likes l ON l.postId = p.postId " +
+          " LEFT JOIN likes l ON l.postId = p.postId" +
+          " GROUP BY p.postId" +
           " ORDER BY postId desc;";
         tx.executeSql(sql, options, (tx: any, results: { rows: string | any[]; }) => {
           if (results.rows.length > 0 && results.rows[0].postId != null) {
@@ -158,7 +161,8 @@ export class DALService {
           " FROM posts p " +
           " INNER JOIN categories c ON c.categoryId = p.categoryId " +
           " INNER JOIN users u ON u.userId = p.userId " +
-          " INNER JOIN likes l ON l.postId = p.postId " +
+          " LEFT JOIN likes l ON l.postId = p.postId" +
+          " GROUP BY p.postId" +
           " WHERE p.categoryId=? ;";
         tx.executeSql(sql, options, (tx: any, results: { rows: string | any[]; }) => {
           if (results.rows.length > 0 && results.rows[0].postId != null) {
