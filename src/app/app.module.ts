@@ -18,7 +18,8 @@ import { AuthGuard } from "./guards/auth.guard";
 import { DatabaseService } from "./services/database/database.service";
 import { PostPageComponent } from './pages/post-page/post-page.component';
 import { CommentsCardComponent } from './components/comments-card/comments-card.component';
-import { AppContainerComponent } from './components/app-container/app-container.component'
+import { AppContainerComponent } from './components/app-container/app-container.component';
+import { SplashScreenComponent } from './components/splash-screen/splash-screen.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { AppContainerComponent } from './components/app-container/app-container.
     RegisterComponent,
     PostPageComponent,
     CommentsCardComponent,
-    AppContainerComponent
+    AppContainerComponent,
+    SplashScreenComponent
   ],
   imports: [
     BrowserModule,
