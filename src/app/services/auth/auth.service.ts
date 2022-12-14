@@ -1,8 +1,8 @@
-import { Injectable } from '@angular/core';
-import { UserModel } from "../../models/user";
-import { Observable, of } from "rxjs";
-import { DALService } from "../database/dal.service";
-import { FavoriteModel } from "../../models/favorite";
+import {Injectable} from '@angular/core';
+import {UserModel} from "../../models/user";
+import {Observable, of} from "rxjs";
+import {DALService} from "../database/dal.service";
+import {FavoriteModel} from "../../models/favorite";
 
 @Injectable({
   providedIn: 'root'
@@ -17,12 +17,12 @@ export class AuthService {
     this.readUser();
   }
 
-  logout () {
+  logout() {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
   }
 
-  login (user: UserModel): Promise<any> {
+  login(user: UserModel): Promise<any> {
     let obj: any = null;
     return new Promise((resolve, reject) => {
       this.dbContext.getUserByUserPass(user.user, user.pass).then((user: UserModel) => {
@@ -49,10 +49,10 @@ export class AuthService {
 
   }
 
-  login2 (user: UserModel): Promise<any> {
+  login2(user: UserModel): Promise<any> {
     let obj: any = null;
     return new Promise((resolve, reject) => {
-      this.dbContext.getPostsByUserId(2).then((favorites: FavoriteModel[]) => {
+      this.dbContext.getFavoritesPostsByUserId(1).then((favorites) => {
 
         console.log(favorites);
 
@@ -70,33 +70,33 @@ export class AuthService {
 
   }
 
-  register (user: UserModel) {
+  register(user: UserModel) {
 
   }
 
-  saveToken (idToken: string) {
+  saveToken(idToken: string) {
 
     this.token = idToken;
     localStorage.setItem("token", idToken);
 
   }
 
-  saveUser (user: UserModel) {
+  saveUser(user: UserModel) {
 
     this.user = user;
     localStorage.setItem("user", JSON.stringify(user));
 
   }
 
-  readToken () {
+  readToken() {
     return this.token = localStorage.getItem("token") || "";
   }
 
-  readUser () {
+  readUser() {
     return this.user = JSON.parse(localStorage.getItem("user") || "{}");
   }
 
-  isLoggedIn (): boolean {
+  isLoggedIn(): boolean {
     return this.token.length > 0
   }
 

@@ -64,12 +64,19 @@ export class DALService {
   }
 
   public getFavoritesPostsByUserId(userId: number): Promise<any> {
-    let options = [userId];
+    let options = [userId, userId];
     return new Promise((resolve, reject) => {
       function txFunction(tx: any) {
-        let sql = "SELECT p.*, c.name as category, u.name as userName FROM posts p INNER JOIN categories c ON c.categoryId = p.categoryId INNER JOIN users u ON u.userId = p.userId WHERE p.categoryId IN (SELECT categoryId FROM favorites WHERE userId=? );";
+        let sql = "SELECT p.*, c.name as category, u.name as userName, " +
+          " COUNT(CASE WHEN l.type = 1 THEN 1  END) as likes, " +
+          " COUNT(CASE WHEN l.type = 0 THEN 1  END) as dislikes," +
+          " (CASE WHEN l.type = 0 AND u.userId = ? THEN 0 WHEN l.type = 1 THEN 1 ELSE null END)as userLikesIt" +
+          " FROM posts p INNER JOIN categories c ON c.categoryId = p.categoryId " +
+          " INNER JOIN users u ON u.userId = p.userId " +
+          " INNER JOIN likes l ON l.postId = p.postId " +
+          " WHERE p.categoryId IN (SELECT categoryId FROM favorites WHERE userId=? );";
         tx.executeSql(sql, options, (tx: any, results: { rows: string | any[]; }) => {
-          if (results.rows.length > 0) {
+          if (results.rows.length > 0 && results.rows[0][0] != null) {
             resolve(results.rows);
           } else {
             reject("No favorites posts found for user");
@@ -87,9 +94,17 @@ export class DALService {
     let options = [userId];
     return new Promise((resolve, reject) => {
       function txFunction(tx: any) {
-        let sql = "SELECT p.*, c.name as category, u.name as userName FROM posts p INNER JOIN categories c ON c.categoryId = p.categoryId INNER JOIN users u ON u.userId = p.userId WHERE p.userId=? ;";
+        let sql = "SELECT p.*, c.name as category, u.name as userName," +
+          " COUNT(CASE WHEN l.type = 1 THEN 1 END) as likes, " +
+          "COUNT(CASE WHEN l.type = 0 THEN 1 END) as dislikes," +
+          " (CASE WHEN l.type = 0 AND u.userId = ? THEN 0 WHEN l.type = 1 THEN 1 ELSE null END)as userLikesIt" +
+          " FROM posts p " +
+          " INNER JOIN categories c ON c.categoryId = p.categoryId " +
+          " INNER JOIN users u ON u.userId = p.userId " +
+          " INNER JOIN likes l ON l.postId = p.postId " +
+          " WHERE p.userId=? ;";
         tx.executeSql(sql, options, (tx: any, results: { rows: string | any[]; }) => {
-          if (results.rows.length > 0) {
+          if (results.rows.length > 0 && results.rows[0][0] != null) {
             resolve(results.rows);
           } else {
             reject("No posts found for user");
@@ -103,13 +118,21 @@ export class DALService {
     });
   }
 
-  public getPosts(): Promise<any> {
-    let options: [] = [];
+  public getPosts(userId: number): Promise<any> {
+    let options = [userId];
     return new Promise((resolve, reject) => {
       function txFunction(tx: any) {
-        let sql = "SELECT p.*, c.name as category, u.name as userName FROM posts p INNER JOIN categories c ON c.categoryId = p.categoryId INNER JOIN users u ON u.userId = p.userId ORDER BY postId desc;";
+        let sql = "SELECT p.*, c.name as category, u.name as userName, " +
+          " COUNT(CASE WHEN l.type = 1 THEN 1  END) as likes, " +
+          " COUNT(CASE WHEN l.type = 0 THEN 1  END) as dislikes," +
+          " (CASE WHEN l.type = 0 AND u.userId = ? THEN 0 WHEN l.type = 1 THEN 1 ELSE null END)as userLikesIt" +
+          " FROM posts p " +
+          " INNER JOIN categories c ON c.categoryId = p.categoryId " +
+          " INNER JOIN users u ON u.userId = p.userId " +
+          " INNER JOIN likes l ON l.postId = p.postId " +
+          " ORDER BY postId desc;";
         tx.executeSql(sql, options, (tx: any, results: { rows: string | any[]; }) => {
-          if (results.rows.length > 0) {
+          if (results.rows.length > 0 && results.rows[0][0] != null) {
             resolve(results.rows);
           } else {
             reject("No posts at all");
@@ -124,8 +147,54 @@ export class DALService {
   }
 
 
+  public getPostsByCategoryId(cateogryId: number, userId: number): Promise<any> {
+    let options = [userId, cateogryId];
+    return new Promise((resolve, reject) => {
+      function txFunction(tx: any) {
+        let sql = "SELECT p.*, c.name as category, u.name as userName, " +
+          "COUNT(CASE WHEN l.type = 1 THEN 1 END) as likes, " +
+          "COUNT(CASE WHEN l.type = 0 THEN 1 END) as dislikes,  " +
+          " (CASE WHEN l.type = 0 AND u.userId = ? THEN 0 WHEN l.type = 1 THEN 1 ELSE null END)as userLikesIt" +
+          " FROM posts p " +
+          " INNER JOIN categories c ON c.categoryId = p.categoryId " +
+          " INNER JOIN users u ON u.userId = p.userId " +
+          " INNER JOIN likes l ON l.postId = p.postId " +
+          " WHERE p.categoryId=? ;";
+        tx.executeSql(sql, options, (tx: any, results: { rows: string | any[]; }) => {
+          if (results.rows.length > 0 && results.rows[0][0] != null) {
+            resolve(results.rows);
+          } else {
+            reject("No posts found for this category");
+          }
+        }, DALService.errorHandler);
+      }
+
+      this.db.transaction(txFunction, DALService.errorHandler, () => {
+        console.log('Success: User Post By UserId transaction successful');
+      });
+    });
+  }
 
 
+  public getCategories(): Promise<any> {
+    let options: [] = [];
+    return new Promise((resolve, reject) => {
+      function txFunction(tx: any) {
+        let sql = "SELECT * FROM categories;";
+        tx.executeSql(sql, options, (tx: any, results: { rows: string | any[]; }) => {
+          if (results.rows.length > 0) {
+            resolve(results.rows);
+          } else {
+            reject("No categories found");
+          }
+        }, DALService.errorHandler);
+      }
+
+      this.db.transaction(txFunction, DALService.errorHandler, () => {
+        console.log('Success: User Post By UserId transaction successful');
+      });
+    });
+  }
 
 
 }
