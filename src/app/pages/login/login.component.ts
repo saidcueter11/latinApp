@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {UserModel} from "../../models/user";
 import {NgForm} from "@angular/forms";
+import {AuthService} from "../../services/auth/auth.service";
+import {Route, Router} from "@angular/router";
 
 @Component({
   selector: 'app-login',
@@ -10,19 +12,30 @@ import {NgForm} from "@angular/forms";
 export class LoginComponent implements OnInit {
 
   user: UserModel;
+  errorMessage: string;
 
-  constructor() {
-  }
+  constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit() {
     this.user = new UserModel();
 
   }
 
-  onSubmit(form:NgForm) {
-    if(form.invalid){
+  onSubmit(form: NgForm) {
+    if (form.invalid) {
       return;
     }
-    console.log(this.user);
+
+    this.authService.login(this.user).then(
+      (res) => {
+        if (res.code == 200) {
+          this.router.navigateByUrl("/home")
+        }
+
+      }).catch((err) => {
+        this.errorMessage = err.message;
+      }
+    );
+
   }
 }

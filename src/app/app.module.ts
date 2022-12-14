@@ -9,13 +9,16 @@ import { CategoryCardComponent } from './components/category-card/category-card.
 import { PostPreviewComponent } from './components/post-preview/post-preview.component';
 import { HomePageComponent } from './pages/home-page/home-page.component';
 import { CommunityPageComponent } from './components/community-page/community-page.component';
-import { DatabaseService } from "./services/database/database.service";
 import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { FormsModule } from "@angular/forms";
+import { AuthService } from "./services/auth/auth.service";
+import { DALService } from "./services/database/dal.service";
+import { AuthGuard } from "./guards/auth.guard";
+import { DatabaseService } from "./services/database/database.service";
 import { PostPageComponent } from './pages/post-page/post-page.component';
 import { CommentsCardComponent } from './components/comments-card/comments-card.component';
-import { AppContainerComponent } from './components/app-container/app-container.component';
+import { AppContainerComponent } from './components/app-container/app-container.component'
 
 @NgModule({
   declarations: [
@@ -37,7 +40,12 @@ import { AppContainerComponent } from './components/app-container/app-container.
     AppRoutingModule,
     FormsModule
   ],
-  providers: [DatabaseService],
+  providers: [
+    DatabaseService,
+    AuthService,
+    DALService
+  ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

@@ -1,7 +1,7 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 
-declare function openDatabase(shortName: string, version: string, displayName: string,
-                              dbSize: number, dbCreateSuccess: () => void): any;
+declare function openDatabase (shortName: string, version: string, displayName: string,
+  dbSize: number, dbCreateSuccess: () => void): any;
 
 @Injectable({
   providedIn: 'root'
@@ -11,28 +11,32 @@ declare function openDatabase(shortName: string, version: string, displayName: s
   providedIn: 'root'
 })
 export class DatabaseService {
-  private db: any = null;
+  get db (): any {
+    return this._db;
+  }
+
+  private _db: any = null;
 
   constructor() {
   }
 
-  private static errorHandler(error: string): any {
+  private static errorHandler (error: string): any {
     console.error("Error: " + error);
   }
 
-  private createDatabase(): void {
+  private createDatabase (): void {
     let shortName = "LatinAppDB";
     let version = "1.0";
     let displayName = "DB for LatingApp";
     let dbSize = 2 * 1024 * 1024;
 
-    this.db = openDatabase(shortName, version, displayName, dbSize, () => {
+    this._db = openDatabase(shortName, version, displayName, dbSize, () => {
       console.log("Success: Database created successfully");
     });
   }
 
-  private createTables(): void {
-    function txFunction(tx: any): void {
+  private createTables (): void {
+    function txFunction (tx: any): void {
       let options: string[] = [];
       let userTable: string = "CREATE TABLE IF NOT EXISTS users(" +
         " userId INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT," +
@@ -64,6 +68,7 @@ export class DatabaseService {
         " postId INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT," +
         " userId INTEGER NOT NULL," +
         " categoryId INTEGER NOT NULL," +
+        " title VARCHAR(40) NOT NULL," +
         " phone VARCHAR(10) NOT NULL," +
         " email VARCHAR(40) NOT NULL," +
         " description TEXT NOT NULL," +
@@ -93,22 +98,36 @@ export class DatabaseService {
         "FOREIGN KEY(postId) REFERENCES posts(postId));";
 
 
-      tx.executeSql(userTable, options, () => {console.info("Success: Table users created");}, DatabaseService.errorHandler);
-      tx.executeSql(notificationTable, options, () => {console.info("Success: Table notification created");}, DatabaseService.errorHandler);
-      tx.executeSql(categoryTable, options, () => {console.info("Success: Table categories created");}, DatabaseService.errorHandler);
-      tx.executeSql(favoriteTable, options, () => {console.info("Success: Table favorites created");}, DatabaseService.errorHandler);
-      tx.executeSql(postTable, options, () => {console.info("Success: Table posts created");}, DatabaseService.errorHandler);
-      tx.executeSql(commentTable, options, () => {console.info("Success: Table comments created");}, DatabaseService.errorHandler);
-      tx.executeSql(likeTable, options, () => {console.info("Success: Table likes created");}, DatabaseService.errorHandler);
+      tx.executeSql(userTable, options, () => {
+        console.info("Success: Table users created");
+      }, DatabaseService.errorHandler);
+      tx.executeSql(notificationTable, options, () => {
+        console.info("Success: Table notification created");
+      }, DatabaseService.errorHandler);
+      tx.executeSql(categoryTable, options, () => {
+        console.info("Success: Table categories created");
+      }, DatabaseService.errorHandler);
+      tx.executeSql(favoriteTable, options, () => {
+        console.info("Success: Table favorites created");
+      }, DatabaseService.errorHandler);
+      tx.executeSql(postTable, options, () => {
+        console.info("Success: Table posts created");
+      }, DatabaseService.errorHandler);
+      tx.executeSql(commentTable, options, () => {
+        console.info("Success: Table comments created");
+      }, DatabaseService.errorHandler);
+      tx.executeSql(likeTable, options, () => {
+        console.info("Success: Table likes created");
+      }, DatabaseService.errorHandler);
     }
 
-    this.db.transaction(txFunction, DatabaseService.errorHandler, () => {
+    this._db.transaction(txFunction, DatabaseService.errorHandler, () => {
       console.log("Success: Table creation transaction successful");
     });
   }
 
-private populateTables(): void {
-    function txFunction(tx: any): void {
+  private populateTables (): void {
+    function txFunction (tx: any): void {
       let options: string[] = [];
 
       let users = "INSERT OR IGNORE INTO users (userId,name,user,pass,creationDate) VALUES " +
@@ -153,13 +172,13 @@ private populateTables(): void {
         '(7,"Childcare" ),' +
         '(8,"Others" ) ;';
 
-      let posts = 'INSERT OR IGNORE INTO posts (postId,userId,categoryId,phone,email,description,urlImage,openDate,closeDate,creationDate) VALUES ' +
+      let posts = 'INSERT OR IGNORE INTO posts (postId,userId,categoryId,title,phone,email,description,urlImage,openDate,closeDate,creationDate) VALUES ' +
 
-        '(1,1,3, 5483335570, "jaime@latinapp.com", "I am looking for a junior web developer to run my new business, please submit a copy of your CV to my email in the given times", "XXXX", "14/12/2022", "16/12/2022", "12/12/2022" ),' +
-        '(2,2,1, 5482235570, "emmanuel@latinapp.com", "I am selling tacos, burritos, enchiladas, and chilaquiles in Waterloo. Please contact me to the number 5486661247", "XXXX", "20/12/2022", "25/12/2022", "10/12/2022" ),' +
-        '(3,3,4, 5483335571, "juan@latinapp.com", "I need someone to help me with some pieces of advice about finding a place where I can get my SIN number. Please call me 5483335571", "XXXX", "12/12/2022", "13/12/2022", "12/12/2022" ),' +
-        '(4,4,6, 5487854422, "said@latinapp.com", "Does anybody know where can I fill mi taxes for 2023?", "XXXX", "15/12/2022", "25/12/2022", "15/12/2022" ),' +
-        '(5,5,2, 3569867758, "ruben@latinapp.com", "I am planning to travel to my origin country next week. Do you know someone who can take me up there?", "XXXX", "01/01/2023", "27/01/2023", "15/12/2023" ) ;';
+        '(1,1,3, "cualquier cosa",5483335570, "jaime@latinapp.com", "I am looking for a junior web developer to run my new business, please submit a copy of your CV to my email in the given times", "XXXX", "14/12/2022", "16/12/2022", "12/12/2022" ),' +
+        '(2,2,1, "cualquier cosa",5482235570, "emmanuel@latinapp.com", "I am selling tacos, burritos, enchiladas, and chilaquiles in Waterloo. Please contact me to the number 5486661247", "XXXX", "20/12/2022", "25/12/2022", "10/12/2022" ),' +
+        '(3,3,4, "cualquier cosa",5483335571, "juan@latinapp.com", "I need someone to help me with some pieces of advice about finding a place where I can get my SIN number. Please call me 5483335571", "XXXX", "12/12/2022", "13/12/2022", "12/12/2022" ),' +
+        '(4,4,6, "cualquier cosa",5487854422, "said@latinapp.com", "Does anybody know where can I fill mi taxes for 2023?", "XXXX", "15/12/2022", "25/12/2022", "15/12/2022" ),' +
+        '(5,5,2, "cualquier cosa",3569867758, "ruben@latinapp.com", "I am planning to travel to my origin country next week. Do you know someone who can take me up there?", "XXXX", "01/01/2023", "27/01/2023", "15/12/2023" ) ;';
 
       let comments = 'INSERT OR IGNORE INTO comments (commentId,userId,postId,description,creationDate) VALUES ' +
 
@@ -182,20 +201,36 @@ private populateTables(): void {
         '(4,3,2,1,"15/12/2022" ),' +
         '(5,2,1,0,"15/12/2022" ) ;';
 
-      tx.executeSql(users, options, () => {console.info("Success: Table users populated");}, DatabaseService.errorHandler);
-      tx.executeSql(notifications, options, () => {console.info("Success: Table users populated");}, DatabaseService.errorHandler);
-      tx.executeSql(favorites, options, () => {console.info("Success: Table favorites populated");}, DatabaseService.errorHandler);
-      tx.executeSql(categories, options, () => {console.info("Success: Table categories populated");}, DatabaseService.errorHandler);
-      tx.executeSql(posts, options, () => {console.info("Success: Table posts populated");}, DatabaseService.errorHandler);
-      tx.executeSql(comments, options, () => {console.info("Success: Table comments populated");}, DatabaseService.errorHandler)
-      tx.executeSql(likes, options, () => {console.info("Success: Table likes populated");}, DatabaseService.errorHandler);
+      tx.executeSql(users, options, () => {
+        console.info("Success: Table users populated");
+      }, DatabaseService.errorHandler);
+      tx.executeSql(notifications, options, () => {
+        console.info("Success: Table users populated");
+      }, DatabaseService.errorHandler);
+      tx.executeSql(favorites, options, () => {
+        console.info("Success: Table favorites populated");
+      }, DatabaseService.errorHandler);
+      tx.executeSql(categories, options, () => {
+        console.info("Success: Table categories populated");
+      }, DatabaseService.errorHandler);
+      tx.executeSql(posts, options, () => {
+        console.info("Success: Table posts populated");
+      }, DatabaseService.errorHandler);
+      tx.executeSql(comments, options, () => {
+        console.info("Success: Table comments populated");
+      }, DatabaseService.errorHandler)
+      tx.executeSql(likes, options, () => {
+        console.info("Success: Table likes populated");
+      }, DatabaseService.errorHandler);
     }
 
-    this.db.transaction(txFunction, DatabaseService.errorHandler, () => {console.log("Success: Population transaction successful");});
+    this._db.transaction(txFunction, DatabaseService.errorHandler, () => {
+      console.log("Success: Population transaction successful");
+    });
   }
 
-  public initDB(): void {
-    if (this.db == null) {
+  public initDB (): void {
+    if (this._db == null) {
       try {
         //create database
         this.createDatabase();
