@@ -49,10 +49,11 @@ export class AuthService {
 
   }
 
+
   login2(user: UserModel): Promise<any> {
     let obj: any = null;
     return new Promise((resolve, reject) => {
-      this.dbContext.getFavoritesPostsByUserId(1).then((favorites) => {
+      this.dbContext.setLike(0, 1, 1, true).then((favorites) => {
 
         console.log(favorites);
 
