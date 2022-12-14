@@ -1,8 +1,8 @@
-import {Injectable} from '@angular/core';
-import {DatabaseService} from "./database.service";
-import {Observable, of} from "rxjs";
-import {UserModel} from "../../models/user";
-import {FavoriteModel} from "../../models/favorite";
+import { Injectable } from '@angular/core';
+import { DatabaseService } from "./database.service";
+import { Observable, of } from "rxjs";
+import { UserModel } from "../../models/user";
+import { FavoriteModel } from "../../models/favorite";
 
 @Injectable({
   providedIn: 'root'
@@ -14,15 +14,15 @@ export class DALService {
     this.db = this.database.db;
   }
 
-  private static errorHandler(error: string): any {
+  private static errorHandler (error: string): any {
     console.error("Error: " + error);
   }
 
-  public getUserByUserPass(username: string, pass: string): Promise<any> {
+  public getUserByUserPass (username: string, pass: string): Promise<any> {
     let options = [username, pass];
     let user: UserModel;
     return new Promise((resolve, reject) => {
-      function txFunction(tx: any) {
+      function txFunction (tx: any) {
         let sql = "SELECT * FROM users WHERE user=? and pass = ?;";
         tx.executeSql(sql, options, (tx: any, results: { rows: string | any[]; }) => {
           if (results.rows.length > 0) {
@@ -42,11 +42,11 @@ export class DALService {
   }
 
 
-  public getFavoritesByUserId(userId: number): Promise<any> {
+  public getFavoritesByUserId (userId: number): Promise<any> {
     let options = [userId];
     let user: UserModel;
     return new Promise((resolve, reject) => {
-      function txFunction(tx: any) {
+      function txFunction (tx: any) {
         let sql = "SELECT * FROM favorites f INNER JOIN categories c ON c.categoryId = f.categoryId WHERE userId=?;";
         tx.executeSql(sql, options, (tx: any, results: { rows: string | any[]; }) => {
           if (results.rows.length > 0) {
@@ -63,10 +63,10 @@ export class DALService {
     });
   }
 
-  public getFavoritesPostsByUserId(userId: number): Promise<any> {
+  public getFavoritesPostsByUserId (userId: number): Promise<any> {
     let options = [userId, userId];
     return new Promise((resolve, reject) => {
-      function txFunction(tx: any) {
+      function txFunction (tx: any) {
         let sql = "SELECT p.*, c.name as category, u.name as userName, " +
           " COUNT(CASE WHEN l.type = 1 THEN 1  END) as likes, " +
           " COUNT(CASE WHEN l.type = 0 THEN 1  END) as dislikes," +
@@ -76,7 +76,7 @@ export class DALService {
           " INNER JOIN likes l ON l.postId = p.postId " +
           " WHERE p.categoryId IN (SELECT categoryId FROM favorites WHERE userId=? );";
         tx.executeSql(sql, options, (tx: any, results: { rows: string | any[]; }) => {
-          if (results.rows.length > 0 && results.rows[0][0] != null) {
+          if (results.rows.length > 0 && results.rows[0].postId != null) {
             resolve(results.rows);
           } else {
             reject("No favorites posts found for user");
@@ -90,10 +90,10 @@ export class DALService {
     });
   }
 
-  public getPostsByUserId(userId: number): Promise<any> {
-    let options = [userId];
+  public getPostsByUserId (userId: number): Promise<any> {
+    let options = [userId, userId];
     return new Promise((resolve, reject) => {
-      function txFunction(tx: any) {
+      function txFunction (tx: any) {
         let sql = "SELECT p.*, c.name as category, u.name as userName," +
           " COUNT(CASE WHEN l.type = 1 THEN 1 END) as likes, " +
           "COUNT(CASE WHEN l.type = 0 THEN 1 END) as dislikes," +
@@ -104,7 +104,7 @@ export class DALService {
           " INNER JOIN likes l ON l.postId = p.postId " +
           " WHERE p.userId=? ;";
         tx.executeSql(sql, options, (tx: any, results: { rows: string | any[]; }) => {
-          if (results.rows.length > 0 && results.rows[0][0] != null) {
+          if (results.rows.length > 0 && results.rows[0].postId != null) {
             resolve(results.rows);
           } else {
             reject("No posts found for user");
@@ -118,10 +118,10 @@ export class DALService {
     });
   }
 
-  public getPosts(userId: number): Promise<any> {
+  public getPosts (userId: number): Promise<any> {
     let options = [userId];
     return new Promise((resolve, reject) => {
-      function txFunction(tx: any) {
+      function txFunction (tx: any) {
         let sql = "SELECT p.*, c.name as category, u.name as userName, " +
           " COUNT(CASE WHEN l.type = 1 THEN 1  END) as likes, " +
           " COUNT(CASE WHEN l.type = 0 THEN 1  END) as dislikes," +
@@ -132,7 +132,7 @@ export class DALService {
           " INNER JOIN likes l ON l.postId = p.postId " +
           " ORDER BY postId desc;";
         tx.executeSql(sql, options, (tx: any, results: { rows: string | any[]; }) => {
-          if (results.rows.length > 0 && results.rows[0][0] != null) {
+          if (results.rows.length > 0 && results.rows[0].postId != null) {
             resolve(results.rows);
           } else {
             reject("No posts at all");
@@ -147,10 +147,10 @@ export class DALService {
   }
 
 
-  public getPostsByCategoryId(cateogryId: number, userId: number): Promise<any> {
+  public getPostsByCategoryId (cateogryId: number, userId: number): Promise<any> {
     let options = [userId, cateogryId];
     return new Promise((resolve, reject) => {
-      function txFunction(tx: any) {
+      function txFunction (tx: any) {
         let sql = "SELECT p.*, c.name as category, u.name as userName, " +
           "COUNT(CASE WHEN l.type = 1 THEN 1 END) as likes, " +
           "COUNT(CASE WHEN l.type = 0 THEN 1 END) as dislikes,  " +
@@ -161,7 +161,7 @@ export class DALService {
           " INNER JOIN likes l ON l.postId = p.postId " +
           " WHERE p.categoryId=? ;";
         tx.executeSql(sql, options, (tx: any, results: { rows: string | any[]; }) => {
-          if (results.rows.length > 0 && results.rows[0][0] != null) {
+          if (results.rows.length > 0 && results.rows[0].postId != null) {
             resolve(results.rows);
           } else {
             reject("No posts found for this category");
@@ -176,10 +176,10 @@ export class DALService {
   }
 
 
-  public getCategories(): Promise<any> {
+  public getCategories (): Promise<any> {
     let options: [] = [];
     return new Promise((resolve, reject) => {
-      function txFunction(tx: any) {
+      function txFunction (tx: any) {
         let sql = "SELECT * FROM categories;";
         tx.executeSql(sql, options, (tx: any, results: { rows: string | any[]; }) => {
           if (results.rows.length > 0) {

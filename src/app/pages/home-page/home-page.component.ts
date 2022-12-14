@@ -22,12 +22,12 @@ export class HomePageComponent implements OnInit {
   }
 
   ngOnInit (): void {
-    this.dbContext.getFavoritesPostsByUserId(3).then((posts: PostModel[]) => {
+    this.dbContext.getFavoritesPostsByUserId(this.auth.user.userId).then((posts: PostModel[]) => {
       this.posts = posts
       console.log(this.posts);
     }).catch(e => this.noPost = "No post where found")
 
-    this.dbContext.getFavoritesByUserId(3).then((categories: CategoryModel[]) => {
+    this.dbContext.getFavoritesByUserId(this.auth.user.userId).then((categories: CategoryModel[]) => {
       console.log(categories)
       this.categories = categories
     })
