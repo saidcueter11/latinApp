@@ -41,6 +41,6 @@ export class PostModel {
   openDate: string = ""
   closeDate: string = ""
   creationDate: string = ""
-  categoryName: string = ""
+  category: string = ""
   userName: string = ""
 }

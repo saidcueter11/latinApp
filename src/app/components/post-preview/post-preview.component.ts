@@ -10,6 +10,6 @@ export class PostPreviewComponent implements OnInit {
   @Input() post: PostModel
 
   ngOnInit (): void {
-
+    console.log(this.post)
   }
 }
