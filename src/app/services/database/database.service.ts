@@ -196,6 +196,8 @@ export class DatabaseService {
       let likes = 'INSERT OR IGNORE INTO likes (likeId,userId,postId,type,creationDate) VALUES ' +
 
         '(1,2,5,1,"12/12/2022" ),' +
+        '(22,2,5,1,"12/12/2022" ),' +
+        '(31,2,5,0,"12/12/2022" ),' +
         '(2,4,4,0,"10/12/2022" ),' +
         '(3,1,3,1,"12/12/2022" ),' +
         '(4,3,2,1,"15/12/2022" ),' +
