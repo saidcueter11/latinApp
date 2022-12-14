@@ -1,9 +1,6 @@
 <p [ngClass]="{
   'overflow-hidden text-start': true,
   'text-truncate': expand
-}" [ngStyle]="{
-  'display': '-webkit-box !important',
-  '-webkit-line-clamp': '2',
-  '-webkit-box-orient': 'vertical',
-    'white-space': 'normal'
-}" style=" font-size: 14px;">{{text}}</p>
+}" [ngStyle]="{'display': expand && '-webkit-box !important'}" [ngStyle]="{'-webkit-line-clamp': expand && '2'}"
+  [ngStyle]="{'white-space': expand && 'normal'}" [ngStyle]="{'-webkit-box-orient': expand && 'vertical'}"
+  style=" font-size: 14px;">{{text}}</p>
