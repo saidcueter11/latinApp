@@ -1,8 +1,8 @@
-import {Injectable} from '@angular/core';
-import {UserModel} from "../../models/user";
-import {Observable, of} from "rxjs";
-import {DALService} from "../database/dal.service";
-import {FavoriteModel} from "../../models/favorite";
+import { Injectable } from '@angular/core';
+import { UserModel } from "../../models/user";
+import { Observable, of } from "rxjs";
+import { DALService } from "../database/dal.service";
+import { FavoriteModel } from "../../models/favorite";
 
 @Injectable({
   providedIn: 'root'
@@ -10,21 +10,19 @@ import {FavoriteModel} from "../../models/favorite";
 export class AuthService {
 
   public token: string;
-  private _user: UserModel;
+  public user: UserModel | any;
 
   constructor(private dbContext: DALService) {
     this.readToken();
+    this.readUser();
   }
 
-  get user(): UserModel {
-    return this._user;
-  }
-
-  logout() {
+  logout () {
     localStorage.removeItem("token");
+    localStorage.removeItem("user");
   }
 
-  login(user: UserModel): Promise<any> {
+  login (user: UserModel): Promise<any> {
     let obj: any = null;
     return new Promise((resolve, reject) => {
       this.dbContext.getUserByUserPass(user.user, user.pass).then((user: UserModel) => {
@@ -34,7 +32,7 @@ export class AuthService {
           message: "Login",
           ...user
         };
-        this._user = user;
+        this.saveUser(user);
         this.saveToken(obj.userId.toString())
 
         resolve(obj);
@@ -51,14 +49,14 @@ export class AuthService {
 
   }
 
-  login2(user: UserModel): Promise<any> {
+  login2 (user: UserModel): Promise<any> {
     let obj: any = null;
     return new Promise((resolve, reject) => {
       this.dbContext.getPostsByUserId(2).then((favorites: FavoriteModel[]) => {
 
         console.log(favorites);
 
-//        resolve(obj);
+        //        resolve(obj);
       }).catch((err) => {
 
         obj = {
@@ -72,22 +70,33 @@ export class AuthService {
 
   }
 
-  register(user: UserModel) {
+  register (user: UserModel) {
 
   }
 
-  saveToken(idToken: string) {
+  saveToken (idToken: string) {
 
     this.token = idToken;
     localStorage.setItem("token", idToken);
 
   }
 
-  readToken() {
+  saveUser (user: UserModel) {
+
+    this.user = user;
+    localStorage.setItem("user", JSON.stringify(user));
+
+  }
+
+  readToken () {
     return this.token = localStorage.getItem("token") || "";
   }
 
-  isLoggedIn(): boolean {
+  readUser () {
+    return this.user = JSON.parse(localStorage.getItem("user") || "{}");
+  }
+
+  isLoggedIn (): boolean {
     return this.token.length > 0
   }
 

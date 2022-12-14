@@ -1,7 +1,6 @@
 <app-app-container>
   <section class="py-5 text-center container ">
-    <!-- {{user.name}} -->
-    <app-hello-message></app-hello-message>
+    <app-hello-message [userName]="user.name"></app-hello-message>
     <div *ngFor="let category of categories">
       <app-category-card [category]="category.name"></app-category-card>
     </div>

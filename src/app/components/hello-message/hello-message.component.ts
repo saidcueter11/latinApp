@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-hello-message',
@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./hello-message.component.css']
 })
 export class HelloMessageComponent {
-
+  @Input() userName: string
 }
