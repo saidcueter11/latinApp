@@ -20,7 +20,7 @@ export class CommunityPageComponent implements OnInit {
     console.log(this.auth.user)
     this.dbContext.getPosts(this.auth.user.userId).then((posts: PostModel[]) => {
       this.posts = posts
-      console.log(this.posts);
+      console.log({ posts });
     }).catch(e => this.noPost = "No post where found")
   }
 }

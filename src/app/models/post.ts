@@ -11,7 +11,10 @@ export class PostModel {
     urlImage: string,
     openDate: string,
     closeDate: string,
-    creationDate: string
+    creationDate: string,
+    userLikesIt: number,
+    likes: number,
+    dislikes: number
   ): PostModel {
     var model = new PostModel();
     model.postId = postId;
@@ -25,7 +28,9 @@ export class PostModel {
     model.openDate = openDate;
     model.closeDate = closeDate;
     model.creationDate = creationDate;
-
+    model.userLikesIt = userLikesIt;
+    model.likes = likes
+    model.dislikes = dislikes
     return model;
   }
 
@@ -43,4 +48,7 @@ export class PostModel {
   creationDate: string = ""
   category: string = ""
   userName: string = ""
+  userLikesIt: number = 0
+  likes: number = 0
+  dislikes: number = 0
 }

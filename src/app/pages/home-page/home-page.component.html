@@ -4,10 +4,11 @@
     <div *ngFor="let category of categories">
       <app-category-card [category]="category.name"></app-category-card>
     </div>
+
     <p *ngIf="noPost != ''; postList">{{noPost}}</p>
-    <ng-template #postList *ngFor="let post of posts">
+    <div #postList *ngFor="let post of posts">
       <app-post-preview [post]="post"></app-post-preview>
-    </ng-template>
+    </div>
 
   </section>
 </app-app-container>

@@ -10,7 +10,7 @@ export class TruncateTextComponent {
   @Input() expand: boolean
 
   truncateClass = {
-    display: '-webkit-box !important',
+    'display': '-webkit-box !important',
     '-webkit-line-clamp': '2',
     '-webkit-box-orient': 'vertical',
     'white-space': 'normal'

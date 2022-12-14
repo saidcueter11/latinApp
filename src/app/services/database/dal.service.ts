@@ -74,8 +74,8 @@ export class DALService {
           " FROM posts p INNER JOIN categories c ON c.categoryId = p.categoryId " +
           " INNER JOIN users u ON u.userId = p.userId " +
           " LEFT JOIN likes l ON l.postId = p.postId" +
-          " GROUP BY p.postId" +
-          " WHERE p.categoryId IN (SELECT categoryId FROM favorites WHERE userId=? );";
+          " WHERE p.categoryId IN (SELECT categoryId FROM favorites WHERE userId=? )" +
+          " GROUP BY p.postId;"
         tx.executeSql(sql, options, (tx: any, results: { rows: string | any[]; }) => {
           if (results.rows.length > 0 && results.rows[0].postId != null) {
             resolve(results.rows);
@@ -93,19 +93,21 @@ export class DALService {
 
   public getPostsByUserId (userId: number): Promise<any> {
     let options = [userId, userId];
+    console.log({ options })
     return new Promise((resolve, reject) => {
       function txFunction (tx: any) {
         let sql = "SELECT p.*, c.name as category, u.name as userName," +
           " COUNT(CASE WHEN l.type = 1 THEN 1 END) as likes, " +
           "COUNT(CASE WHEN l.type = 0 THEN 1 END) as dislikes," +
-          " (CASE WHEN l.type = 0 AND u.userId = ? THEN 0 WHEN l.type = 1 THEN 1 ELSE null END)as userLikesIt" +
+          " (CASE WHEN l.type = 0 AND u.userId = ? THEN 0 WHEN l.type = 1 THEN 1 ELSE null END) as userLikesIt" +
           " FROM posts p " +
           " INNER JOIN categories c ON c.categoryId = p.categoryId " +
           " INNER JOIN users u ON u.userId = p.userId " +
           " LEFT JOIN likes l ON l.postId = p.postId" +
-          " GROUP BY p.postId" +
-          " WHERE p.userId=? ;";
+          " WHERE p.userId=? " +
+          " GROUP BY p.postId;"
         tx.executeSql(sql, options, (tx: any, results: { rows: string | any[]; }) => {
+          console.log(results.rows)
           if (results.rows.length > 0 && results.rows[0].postId != null) {
             resolve(results.rows);
           } else {
