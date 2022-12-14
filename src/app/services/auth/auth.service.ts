@@ -10,18 +10,16 @@ import {FavoriteModel} from "../../models/favorite";
 export class AuthService {
 
   public token: string;
-  private _user: UserModel;
+  public user: UserModel | any;
 
   constructor(private dbContext: DALService) {
     this.readToken();
-  }
-
-  get user(): UserModel {
-    return this._user;
+    this.readUser();
   }
 
   logout() {
     localStorage.removeItem("token");
+    localStorage.removeItem("user");
   }
 
   login(user: UserModel): Promise<any> {
@@ -34,7 +32,7 @@ export class AuthService {
           message: "Login",
           ...user
         };
-        this._user = user;
+        this.saveUser(user);
         this.saveToken(obj.userId.toString())
 
         resolve(obj);
@@ -83,8 +81,19 @@ export class AuthService {
 
   }
 
+  saveUser(user: UserModel) {
+
+    this.user = user;
+    localStorage.setItem("user", JSON.stringify(user));
+
+  }
+
   readToken() {
     return this.token = localStorage.getItem("token") || "";
+  }
+
+  readUser() {
+    return this.user = JSON.parse(localStorage.getItem("user") || "");
   }
 
   isLoggedIn(): boolean {
