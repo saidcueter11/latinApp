@@ -9,12 +9,17 @@ import {FavoriteModel} from "../../models/favorite";
 })
 export class AuthService {
 
+
   public token: string;
+  private _user: UserModel;
 
   constructor(private dbContext: DALService) {
     this.readToken();
   }
 
+  user(): UserModel {
+    return this._user;
+  }
 
   logout() {
     localStorage.removeItem("token");
@@ -23,14 +28,14 @@ export class AuthService {
   login(user: UserModel): Promise<any> {
     let obj: any = null;
     return new Promise((resolve, reject) => {
-      this.dbContext.getUserByUserPass(user.user, user.pass).then((user) => {
+      this.dbContext.getUserByUserPass(user.user, user.pass).then((user: UserModel) => {
         obj = {
           code: 200,
           status: true,
           message: "Login",
           ...user
         };
-        console.log(user);
+        this._user = user;
         this.saveToken(obj.userId.toString())
 
         resolve(obj);
@@ -46,10 +51,11 @@ export class AuthService {
     });
 
   }
+
   login2(user: UserModel): Promise<any> {
     let obj: any = null;
     return new Promise((resolve, reject) => {
-      this.dbContext.getPostsByUserId(2).then((favorites:FavoriteModel[]) => {
+      this.dbContext.getPostsByUserId(2).then((favorites: FavoriteModel[]) => {
 
         console.log(favorites);
 
@@ -85,4 +91,6 @@ export class AuthService {
   isLoggedIn(): boolean {
     return this.token.length > 0
   }
+
+
 }
