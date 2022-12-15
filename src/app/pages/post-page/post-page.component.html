@@ -32,8 +32,23 @@
     </div>
   </div>
 
-  <div class="mt-3 flex-column col gap-4 d-flex px-2" *ngFor="let comment of comments">
-    <app-comments-card [comment]="comment"></app-comments-card>
+  <div>
+    <form #myform="ngForm" (ngSubmit)="createComment(myform)">
+      <div class="form-floating d-flex flex-column gap-2">
+        <textarea class="form-control" required [(ngModel)]="newComment.description" name="description"
+          style="height: 100px"></textarea>
+        <label for="floatingTextarea2">Add new comment</label>
+        <span *ngIf="myform.submitted && myform.controls['description'].errors" class="text-danger">Description is
+          required</span>
+
+        <button class="btn btn-primary">Add</button>
+      </div>
+    </form>
+    <div class="mt-3 flex-column col gap-4 d-flex" *ngFor="let comment of comments">
+      <app-comments-card [comment]="comment"></app-comments-card>
+    </div>
+
   </div>
+
 
 </section>

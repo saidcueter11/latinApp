@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { NgForm } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CommentsModel } from 'src/app/models/comments';
 import { PostModel } from 'src/app/models/post';
 import { AuthService } from 'src/app/services/auth/auth.service';
@@ -13,12 +14,37 @@ import { DALService } from 'src/app/services/database/dal.service';
 export class PostPageComponent implements OnInit {
   post: PostModel
   comments: CommentsModel[]
+  newComment: CommentsModel = {
+    commentId: 0,
+    creationDate: "",
+    description: "",
+    postId: 0,
+    userId: 0,
+    userName: ""
+  }
 
-  constructor(private route: ActivatedRoute, private dbContext: DALService) {
+  constructor(private route: ActivatedRoute, private dbContext: DALService, private authService: AuthService, private router: Router) {
 
   }
   previousePage () {
     history.back()
+  }
+
+  createComment (form: NgForm) {
+    if (form.invalid) {
+      return;
+    }
+
+    // this.dbContext.addCommentToPost().then(
+    //   (res) => {
+    //     if (res.code == 200) {
+    //       this.router.navigateByUrl("/home")
+    //     }
+
+    //   }).catch((err) => {
+    //     this.errorMessage = err.message;
+    //   }
+    //   );
   }
 
   ngOnInit (): void {

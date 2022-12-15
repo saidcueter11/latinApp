@@ -3,6 +3,7 @@ import { DatabaseService } from "./database.service";
 import { Observable, of } from "rxjs";
 import { UserModel } from "../../models/user";
 import { FavoriteModel } from "../../models/favorite";
+import { CommentsModel } from 'src/app/models/comments';
 
 @Injectable({
   providedIn: 'root'
@@ -243,7 +244,6 @@ export class DALService {
           } else {
             options = [type, postId, userId];
             sql = `UPDATE likes SET type = ? , creationDate = "${dd}/${mm}/${yyyy}" WHERE postId=? AND userId=?;`;
-
           }
         } else {
           options = [postId, userId];
@@ -265,13 +265,13 @@ export class DALService {
     });
   }
 
-  public registerUser(user: UserModel): Promise<any> {
+  public registerUser (user: UserModel): Promise<any> {
 
     let options: any = [];
     return new Promise((resolve, reject) => {
 
 
-      function txFunction(tx: any) {
+      function txFunction (tx: any) {
 
         let today: any = new Date();
         var dd = String(today.getDate()).padStart(2, '0');
@@ -290,7 +290,7 @@ export class DALService {
             tx.executeSql(sql, options2, (tx: any, results: { rows: string | any[]; }) => {
               tx.executeSql(sqlExist, options, (tx: any, res: any) => {
                 user = res.rows[0];
-                options=[user.userId,user.userId,user.userId];
+                options = [user.userId, user.userId, user.userId];
                 tx.executeSql("INSERT INTO favorites(userId,categoryId) VALUES (?,1),(?,2),(?,3)", options, () => {
                   resolve(res.rows[0]);
                 });
@@ -314,5 +314,30 @@ export class DALService {
     });
   }
 
+  public addCommentToPost (comment: CommentsModel) {
+    let options = []
+
+    return new Promise((resolve, rejected) => {
+
+      function txFunction (tx: any) {
+        let today: any = new Date();
+        var dd = String(today.getDate()).padStart(2, '0');
+        var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+        var yyyy = today.getFullYear();
+        comment.creationDate = `${dd}/${mm}/${yyyy}`
+        options = [comment.userId, comment.postId, comment.description, comment.creationDate]
+
+        const sql = "INSERT INTO comments (userId,postId,description,creationDate) VALUES (?,?,?,?)"
+
+        tx.executeSql(sql, options, () => "Comment added", DALService.errorHandler);
+
+      }
+
+
+      this.db.transaction(txFunction, DALService.errorHandler, () => {
+        console.log('Success: Comment created successful');
+      })
+    })
+  }
 
 }
