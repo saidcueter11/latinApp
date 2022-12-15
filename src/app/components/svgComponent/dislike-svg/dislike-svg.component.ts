@@ -6,5 +6,5 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./dislike-svg.component.css']
 })
 export class DislikeSvgComponent {
-  @Input() isLiked: number
+  @Input() isLiked: number | null
 }

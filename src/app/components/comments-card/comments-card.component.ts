@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { CommentsModel } from 'src/app/models/comments';
 
 @Component({
   selector: 'app-comments-card',
@@ -8,6 +9,7 @@ import { Component, Input } from '@angular/core';
 export class CommentsCardComponent {
   expand: boolean = true
 
+  @Input() comment: CommentsModel
 
   toggleCollapse () {
     this.expand = !this.expand

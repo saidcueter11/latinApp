@@ -13,7 +13,7 @@
       <div class="d-flex justify-content-between">
         <div class="d-flex gap-2">
           <div class="d-flex align-items-start">
-            <app-like-svg></app-like-svg>
+            <app-like-svg [isLiked]="post.userLikesIt" [postId]="post.postId"></app-like-svg>
             <p class="ms-2">{{post.likes}}</p>
           </div>
           <div class="d-flex align-items-start">
