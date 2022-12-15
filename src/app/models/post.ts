@@ -35,6 +35,7 @@ export class PostModel {
   }
 
 
+
   postId: number = 0
   userId: number = 0
   categoryId: number = 0

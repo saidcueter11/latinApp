@@ -1,82 +1,44 @@
 <div class="mt-4 mx-3">
-  <a routerLink="/posts"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512 " width="30" height="30">
+  <a routerLink="/posts">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512 " width="30" height="30">
       <path fill="#009BD3"
-        d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l192 192c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 278.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-192 192z" />
-    </svg></a>
+            d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l192 192c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 278.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-192 192z"/>
+    </svg>
+  </a>
 </div>
-<section class="container-fluid py-2">
-  <div class="">
-    <div class="mt-4 px-3">
-      <h2 class="text-center">Add a Post</h2>
 
-      <form #frmPost="ngForm" (ngSubmit)="onSubmit(frmPost)">
+<main class="form-register">
+  <form #frm="ngForm"
+        (ngSubmit)="onSubmit(frm)">
+    <h1 class="h3 mb-3 fw-normal text-center">Add new Post</h1>
 
-        <div class="form-row">
-          <div class="form-group col-md-6">
-            <!--            <div *ngIf="frmPost.submitted" class="text-danger">{{errorMessage}}</div>-->
+    <span *ngIf="frm.submitted" class="text-danger">{{errorMessage}}</span>
 
-
-
-            <input type="text" class="form-control" id="title" name="title" placeholder="Title" minlength="3" required>
-            <label for="title">Title</label>
-          </div>
-        </div>
-        <div>
-          <div class="form-group col-md-6">
-            <input type="tel" class="form-control" id="phone" name="phone" placeholder="Phone"
-              pattern="[0-9]{3}[0-9]{2}[0-9]{3}" required>
-            <!--            <span *ngIf="frmPost.submitted && frmPost.controls['post'].errors" class="text-danger">This Form is required</span>-->
-            <label for="phone">Phone</label>
-          </div>
-          <div class="form-group col-md-6">
-            <input type="email" class="form-control" id="email" name="email" placeholder="Email"
-              pattern="[^\s@]+@([^\s@.,]+\.)+[^\s@.,]{2,}">
-            <!--            <span *ngIf="frmPost.submitted && frmPost.controls['user'].errors" class="text-danger">This Form is required</span>-->
-            <label for="email">Email</label>
-          </div>
-        </div>
-        <div>
-          <div class="form-group">
-            <textarea type="text" class="form-control" id="description" name="description"
-              placeholder="Description"></textarea>
-            <!--            <span *ngIf="frmPost.submitted && frmPost.controls['user'].errors" class="text-danger">This Form is required</span>-->
-            <label for="description">Description</label>
-          </div>
-        </div>
-        <div>
-          <div class="form-group">
-            <input type="url" class="form-control" id="urlImage" name="urlImage" placeholder="Image URL">
-            <!--            <span *ngIf="frmPost.submitted && frmPost.controls['user'].errors" class="text-danger">This Form is required</span>-->
-            <label for="urlImage">Image URL</label>
-          </div>
-          <div>
-            <div class="form-group col-md-6">
-              <input type="date" class="form-control" id="openDate" name="openDate" required>
-              <!--              <span *ngIf="frmPost.submitted && frmPost.controls['user'].errors" class="text-danger">This Form is required</span>-->
-              <label for="openDate">Open Date</label>
-            </div>
-          </div>
-          <div>
-            <div class="form-group col-md-6">
-              <input type="date" class="form-control" id="closeDate" name="closeDate" required>
-              <!--              <span *ngIf="frmPost.submitted && frmPost.controls['user'].errors" class="text-danger">This Form is required</span>-->
-              <label for="closeDate">Open Date</label>
-            </div>
-          </div>
-        </div>
-
-
-        <!--          <div class="form-group col-md-2">-->
-        <!--            <label for="creationDate">Zip</label>-->
-        <!--            <input type="date" class="form-control" id="creationDate" hidden value="now">-->
-        <!--          </div>-->
-        <br>
-        <button type="submit" class="btn btn-primary" id="btnSubmitPostForm" name="btnSubmitPostForm"
-          (click)="btnAdd_click()">Submit</button>
-      </form>
-      <br>
-
+    <div class="form-floating" style="margin-top: 4px">
+      <input type="text" class="form-control" required [(ngModel)]="post.title" name="title">
+      <span *ngIf="frm.submitted && frm.controls['title'].errors" class="text-danger">The title is required</span>
+      <label>Title</label>
     </div>
-  </div>
 
-</section>
+    <div class="form-floating" style="margin-top: 4px">
+      <select class="form-control" [(ngModel)]="post.categoryId" name="categoryId">
+        <option *ngFor="let category of categories" [value]="category.categoryId">
+          {{category.name}}
+        </option>
+      </select>
+      <span *ngIf="frm.submitted && frm.controls['categoryId'].errors" class="text-danger">The Category is required</span>
+      <label>Categories</label>
+    </div>
+
+
+    <div class="form-floating" style="margin-top: 4px">
+      <textarea class="form-control" style="height: 100px" required [(ngModel)]="post.description"
+                name="description"></textarea>
+      <span *ngIf="frm.submitted && frm.controls['description'].errors" class="text-danger">The description is required</span>
+      <label>Description</label>
+    </div>
+
+    <button class="w-100 btn btn-lg btn-primary" style="margin-top: 2px" type="submit">Save</button>
+
+  </form>
+</main>

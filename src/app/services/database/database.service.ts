@@ -69,12 +69,12 @@ export class DatabaseService {
         " userId INTEGER NOT NULL," +
         " categoryId INTEGER NOT NULL," +
         " title VARCHAR(40) NOT NULL," +
-        " phone VARCHAR(10) NOT NULL," +
-        " email VARCHAR(40) NOT NULL," +
+        " phone VARCHAR(10)," +
+        " email VARCHAR(40)," +
         " description TEXT NOT NULL," +
-        " urlImage TEXT NOT NULL," +
-        " openDate DATETIME NOT NULL," +
-        " closeDate DATETIME NOT NULL," +
+        " urlImage TEXT ," +
+        " openDate DATETIME," +
+        " closeDate DATETIME ," +
         " creationDate DATETIME NOT NULL," +
         "FOREIGN KEY(userId) REFERENCES users(userId)," +
         "FOREIGN KEY(categoryId) REFERENCES categories(categoryId));";
