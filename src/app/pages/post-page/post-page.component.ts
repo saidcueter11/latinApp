@@ -44,7 +44,6 @@ export class PostPageComponent implements OnInit {
 
         this.router.onSameUrlNavigation = 'reload';
         this.router.navigate(["/post", { post: JSON.stringify(this.post) }]);
-        window.location.reload();
       }).catch((err) => {
         console.log("error")
       });
