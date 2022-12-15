@@ -1,4 +1,5 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { OutletContext } from '@angular/router';
 
 @Component({
   selector: 'app-category-card',
@@ -7,4 +8,6 @@ import { Component, Input } from '@angular/core';
 })
 export class CategoryCardComponent {
   @Input() category: string
+
+
 }

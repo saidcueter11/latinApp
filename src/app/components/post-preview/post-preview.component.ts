@@ -1,5 +1,4 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { pipe } from 'rxjs';
 import { PostModel } from 'src/app/models/post';
 
 @Component({
@@ -15,7 +14,6 @@ export class PostPreviewComponent implements OnInit {
 
   ngOnInit (): void {
     this.obj = JSON.stringify(this.post)
-    this.randomUserImg = `https://randomuser.me/api/portraits/women/${this.post.userId}.jpg`
-    console.log(this.post)
+
   }
 }
