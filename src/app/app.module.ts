@@ -25,7 +25,8 @@ import { UserCardComponent } from './components/user-card/user-card.component';
 import { LikeSvgComponent } from './components/svgComponent/like-svg/like-svg.component';
 import { DislikeSvgComponent } from './components/svgComponent/dislike-svg/dislike-svg.component';
 import { TruncateTextComponent } from './components/truncate-text/truncate-text.component';
-import { PostFormComponent } from './pages/post-form/post-form.component'
+import { PostFormComponent } from './pages/post-form/post-form.component';
+import { AboutPageComponent } from './pages/about-page/about-page.component'
 
 
 @NgModule({
@@ -50,6 +51,7 @@ import { PostFormComponent } from './pages/post-form/post-form.component'
     DislikeSvgComponent,
     TruncateTextComponent,
     PostFormComponent,
+    AboutPageComponent,
   ],
   imports: [
     BrowserModule,

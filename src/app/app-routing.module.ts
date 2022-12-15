@@ -9,6 +9,7 @@ import { LoginComponent } from "./pages/login/login.component";
 import { RegisterComponent } from "./pages/register/register.component";
 import { MyPostsPageComponent } from './pages/my-posts-page/my-posts-page.component';
 import { PostFormComponent } from './pages/post-form/post-form.component';
+import { AboutPageComponent } from './pages/about-page/about-page.component';
 
 const routes: Routes = [
 
@@ -19,7 +20,8 @@ const routes: Routes = [
   { path: 'post', component: PostPageComponent },
   { path: 'community', component: CommunityPageComponent },
   { path: 'posts', component: MyPostsPageComponent },
-  { path: 'create', component: PostFormComponent }
+  { path: 'create', component: PostFormComponent },
+  { path: 'about', component: AboutPageComponent }
 ];
 
 @NgModule({
