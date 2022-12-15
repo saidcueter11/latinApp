@@ -35,16 +35,19 @@ export class PostPageComponent implements OnInit {
       return;
     }
 
-    // this.dbContext.addCommentToPost().then(
-    //   (res) => {
-    //     if (res.code == 200) {
-    //       this.router.navigateByUrl("/home")
-    //     }
+    this.newComment.postId = this.post.postId
+    this.newComment.userId = this.authService.user.userId;
+    console.log(this.newComment)
+    this.dbContext.addCommentToPost(this.newComment).then(
+      (res) => {
+        console.log(res)
 
-    //   }).catch((err) => {
-    //     this.errorMessage = err.message;
-    //   }
-    //   );
+        this.router.onSameUrlNavigation = 'reload';
+        this.router.navigate(["/post", { post: JSON.stringify(this.post) }]);
+        window.location.reload();
+      }).catch((err) => {
+        console.log("error")
+      });
   }
 
   ngOnInit (): void {
@@ -54,5 +57,7 @@ export class PostPageComponent implements OnInit {
       this.comments = data
     }
     )
+
+
   }
 }

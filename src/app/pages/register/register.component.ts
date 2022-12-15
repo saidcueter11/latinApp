@@ -18,6 +18,9 @@ export class RegisterComponent implements OnInit {
   constructor(private authService: AuthService, private router: Router) {
   }
 
+  previousePage () {
+    history.back()
+  }
   ngOnInit() {
     this.user = new UserModel();
 

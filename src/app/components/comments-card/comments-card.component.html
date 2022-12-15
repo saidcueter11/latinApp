@@ -2,7 +2,7 @@
   <div class="card-body">
     <div class="d-flex justify-content-between mb-2">
       <app-user-card [userName]="comment.userName" [userId]="comment.userId" [page]="'community'"></app-user-card>
-      <h6 class="card-subtitle my-2 text-muted">2 hours ago</h6>
+      <h6 class="card-subtitle my-2 text-muted">{{comment.creationDate}}</h6>
     </div>
     <app-truncate-text [expand]="expand" [text]="comment.description">
     </app-truncate-text>

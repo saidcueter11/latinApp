@@ -44,6 +44,9 @@ body {
 .form-register input {
   margin-bottom: 2px;
 }
+.form-floating{
+  text-align: left;
+}
 
 
 /*.form-register input[type="email"] {*/

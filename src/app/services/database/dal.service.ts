@@ -3,6 +3,7 @@ import { DatabaseService } from "./database.service";
 import { Observable, of } from "rxjs";
 import { UserModel } from "../../models/user";
 import { FavoriteModel } from "../../models/favorite";
+import { PostModel } from "../../models/post";
 import { CommentsModel } from 'src/app/models/comments';
 
 @Injectable({
@@ -76,7 +77,8 @@ export class DALService {
           " INNER JOIN users u ON u.userId = p.userId " +
           " LEFT JOIN likes l ON l.postId = p.postId" +
           " WHERE p.categoryId IN (SELECT categoryId FROM favorites WHERE userId=? )" +
-          " GROUP BY p.postId;"
+          " GROUP BY p.postId" +
+          " ORDER BY 1;"
         tx.executeSql(sql, options, (tx: any, results: { rows: string | any[]; }) => {
           if (results.rows.length > 0 && results.rows[0].postId != null) {
             resolve(results.rows);
@@ -106,7 +108,8 @@ export class DALService {
           " INNER JOIN users u ON u.userId = p.userId " +
           " LEFT JOIN likes l ON l.postId = p.postId" +
           " WHERE p.userId=? " +
-          " GROUP BY p.postId;"
+          " GROUP BY p.postId" +
+          " ORDER BY 1 desc;"
         tx.executeSql(sql, options, (tx: any, results: { rows: string | any[]; }) => {
           console.log(results.rows)
           if (results.rows.length > 0 && results.rows[0].postId != null) {
@@ -166,7 +169,8 @@ export class DALService {
           " INNER JOIN users u ON u.userId = p.userId " +
           " LEFT JOIN likes l ON l.postId = p.postId" +
           " GROUP BY p.postId" +
-          " WHERE p.categoryId=? ;";
+          " WHERE p.categoryId=?" +
+          " ORDER BY 1 desc ;";
         tx.executeSql(sql, options, (tx: any, results: { rows: string | any[]; }) => {
           if (results.rows.length > 0 && results.rows[0].postId != null) {
             resolve(results.rows);
@@ -211,7 +215,8 @@ export class DALService {
           " FROM comments c " +
           " INNER JOIN users u ON u.userId = c.userId" +
           " INNER JOIN posts p ON p.postId = c.postId" +
-          " WHERE p.postId=? ;";
+          " WHERE p.postId=? " +
+          " ORDER BY 1 desc;"
         tx.executeSql(sql, options, (tx: any, results: { rows: string | any[]; }) => {
           if (results.rows.length > 0) {
             resolve(results.rows);
@@ -223,6 +228,33 @@ export class DALService {
 
       this.db.transaction(txFunction, DALService.errorHandler, () => {
         console.log('Success: User Post By UserId transaction successful');
+      });
+    });
+  }
+
+  public addPost (post: PostModel): Promise<any> {
+    let options: any = [];
+    return new Promise((resolve, reject) => {
+      function txFunction (tx: any) {
+        let today: any = new Date();
+        var dd = String(today.getDate()).padStart(2, '0');
+        var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+        var yyyy = today.getFullYear();
+        post.creationDate = `${dd}/${mm}/${yyyy}`;
+        options = [post.userId, parseInt(post.categoryId + ""), post.title, post.description, post.creationDate];
+        console.log(options)
+        let sql = "INSERT INTO posts (userId,categoryId,title,description,creationDate) VALUES (?,?,?,?,?);";
+        tx.executeSql(sql, options, (tx: any, results: { rows: string | any[]; }) => {
+          if (results) {
+            resolve(true);
+          } else {
+            reject("No post added");
+          }
+        }, DALService.errorHandler);
+      }
+
+      this.db.transaction(txFunction, DALService.errorHandler, () => {
+        console.log('Success: Create Post transaction successful');
       });
     });
   }
@@ -244,6 +276,7 @@ export class DALService {
           } else {
             options = [type, postId, userId];
             sql = `UPDATE likes SET type = ? , creationDate = "${dd}/${mm}/${yyyy}" WHERE postId=? AND userId=?;`;
+
           }
         } else {
           options = [postId, userId];
@@ -314,10 +347,11 @@ export class DALService {
     });
   }
 
+
   public addCommentToPost (comment: CommentsModel) {
     let options = []
 
-    return new Promise((resolve, rejected) => {
+    return new Promise((resolve, reject) => {
 
       function txFunction (tx: any) {
         let today: any = new Date();
@@ -327,9 +361,15 @@ export class DALService {
         comment.creationDate = `${dd}/${mm}/${yyyy}`
         options = [comment.userId, comment.postId, comment.description, comment.creationDate]
 
-        const sql = "INSERT INTO comments (userId,postId,description,creationDate) VALUES (?,?,?,?)"
+        const sql = "INSERT INTO comments (userId,postId,description,creationDate) VALUES (?,?,?,?);"
 
-        tx.executeSql(sql, options, () => "Comment added", DALService.errorHandler);
+        tx.executeSql(sql, options, (tx: any, results: { rows: string | any[]; }) => {
+          if (results) {
+            resolve(true);
+          } else {
+            reject("No post added");
+          }
+        }, DALService.errorHandler);
 
       }
 
@@ -339,5 +379,4 @@ export class DALService {
       })
     })
   }
-
 }

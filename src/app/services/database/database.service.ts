@@ -69,12 +69,12 @@ export class DatabaseService {
         " userId INTEGER NOT NULL," +
         " categoryId INTEGER NOT NULL," +
         " title VARCHAR(40) NOT NULL," +
-        " phone VARCHAR(10) NOT NULL," +
-        " email VARCHAR(40) NOT NULL," +
+        " phone VARCHAR(10)," +
+        " email VARCHAR(40)," +
         " description TEXT NOT NULL," +
-        " urlImage TEXT NOT NULL," +
-        " openDate DATETIME NOT NULL," +
-        " closeDate DATETIME NOT NULL," +
+        " urlImage TEXT ," +
+        " openDate DATETIME," +
+        " closeDate DATETIME ," +
         " creationDate DATETIME NOT NULL," +
         "FOREIGN KEY(userId) REFERENCES users(userId)," +
         "FOREIGN KEY(categoryId) REFERENCES categories(categoryId));";
@@ -149,20 +149,20 @@ export class DatabaseService {
 
       let favorites = "INSERT OR IGNORE INTO favorites (favoriteId,userID,categoryID) VALUES " +
         "(1,5,1 )," +
-        "(1,5,2 )," +
-        "(1,5,3 )," +
-        "(2,4,4 )," +
-        "(2,4,5 )," +
-        "(2,4,6 )," +
-        "(3,3,7 )," +
-        "(3,3,8 )," +
-        "(3,3,1 )," +
-        "(4,2,2 )," +
-        "(4,2,3 )," +
-        "(4,2,4 )," +
-        "(5,1,5 )," +
-        "(5,1,6 )," +
-        "(5,1,7 );";
+        "(2,5,2 )," +
+        "(3,5,3 )," +
+        "(4,4,4 )," +
+        "(5,4,5 )," +
+        "(6,4,6 )," +
+        "(7,3,7 )," +
+        "(8,3,8 )," +
+        "(9,3,1 )," +
+        "(10,2,2 )," +
+        "(11,2,3 )," +
+        "(12,2,4 )," +
+        "(13,1,5 )," +
+        "(14,1,6 )," +
+        "(15,1,7 );";
 
       let categories = 'INSERT OR IGNORE INTO categories (categoryId,name) VALUES ' +
         '(1,"Food" ),' +
