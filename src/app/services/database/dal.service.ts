@@ -226,7 +226,7 @@ export class DALService {
     });
   }
 
-  public setLike(type: 1 | 0 | null, postId: number, userId: number, hasLike: boolean): Promise<any> {
+  public setLike(type: number, postId: number, userId: number, hasLike: boolean): Promise<any> {
     let options: any = [];
     return new Promise((resolve, reject) => {
       function txFunction(tx: any) {
@@ -250,7 +250,7 @@ export class DALService {
         }
 
         tx.executeSql(sql, options, (tx: any, results: { rows: string | any[]; }) => {
-          if (results.rows.length > 0) {
+          if (results) {
             resolve(true);
           } else {
             reject("No like was found for user");
@@ -260,6 +260,55 @@ export class DALService {
 
       this.db.transaction(txFunction, DALService.errorHandler, () => {
         console.log('Success: Likes transaction successful');
+      });
+    });
+  }
+
+  public registerUser(user: UserModel): Promise<any> {
+
+    let options: any = [];
+    return new Promise((resolve, reject) => {
+
+
+      function txFunction(tx: any) {
+
+        let today: any = new Date();
+        var dd = String(today.getDate()).padStart(2, '0');
+        var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+        var yyyy = today.getFullYear();
+        user.creationDate = `${dd}/${mm}/${yyyy}`;
+        options = [user.user];
+        let options2 = [user.name, user.user, user.pass, user.creationDate];
+
+        let sqlExist = `SELECT * FROM users WHERE user=?`;
+        tx.executeSql(sqlExist, options, (tx: any, res: any) => {
+
+          if (res.rows.length == 0) {
+            let sql = `INSERT INTO users (name,user,pass,creationDate) VALUES (?,?,?,?)`;
+
+            tx.executeSql(sql, options2, (tx: any, results: { rows: string | any[]; }) => {
+              tx.executeSql(sqlExist, options, (tx: any, res: any) => {
+                user = res.rows[0];
+                options=[user.userId,user.userId,user.userId];
+                tx.executeSql("INSERT INTO favorites(userId,categoryId) VALUES (?,1),(?,2),(?,3)", options, () => {
+                  resolve(res.rows[0]);
+                });
+              });
+
+
+            }, DALService.errorHandler);
+          } else {
+            reject("The username has been already taken. ");
+          }
+
+
+        }, DALService.errorHandler);
+
+
+      }
+
+      this.db.transaction(txFunction, DALService.errorHandler, () => {
+        console.log('Success: User registration successful');
       });
     });
   }

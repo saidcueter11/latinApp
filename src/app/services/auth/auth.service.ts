@@ -71,8 +71,29 @@ export class AuthService {
 
   }
 
-  register(user: UserModel) {
+  register(user: UserModel): Promise<any> {
+    let obj: any = null;
+    return new Promise((resolve, reject) => {
+      this.dbContext.registerUser(user).then((user: UserModel) => {
+        obj = {
+          code: 200,
+          status: true,
+          message: "Register",
+          ...user
+        };
+        this.saveUser(user);
+        this.saveToken(obj.userId.toString())
+        resolve(obj);
+      }).catch((err) => {
 
+        obj = {
+          code: 404,
+          status: false,
+          message: err
+        };
+        reject(obj);
+      });
+    });
   }
 
   saveToken(idToken: string) {
