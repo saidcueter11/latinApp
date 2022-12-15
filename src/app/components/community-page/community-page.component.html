@@ -1,22 +1,25 @@
 <app-app-container>
   <section class="py-5 text-center container">
     <h1 class="mt-5 mb-3">Community</h1>
-    <div class="d-flex justify-content-evenly overflow-scroll gap-2">
-      <app-category-card></app-category-card>
-      <app-category-card></app-category-card>
-      <app-category-card></app-category-card>
-      <app-category-card></app-category-card>
-      <app-category-card></app-category-card>
-      <app-category-card></app-category-card>
-      <app-category-card></app-category-card>
-      <app-category-card></app-category-card>
-      <app-category-card></app-category-card>
-      <app-category-card></app-category-card>
-      <app-category-card></app-category-card>
+
+    <div class="container-fluid d-flex overflow-scroll gap-2">
+      <div *ngFor="let category of categories">
+        <div (click)="onClick(category.categoryId)">
+          <app-category-card [category]="category.name"></app-category-card>
+        </div>
+      </div>
     </div>
 
-    <div *ngFor="let post of posts">
-      <app-post-preview [post]="post"></app-post-preview>
+    <div *ngIf="filteredByCategories.length == 0">
+      <div *ngFor="let post of posts">
+        <app-post-preview [post]="post"></app-post-preview>
+      </div>
+    </div>
+
+    <div *ngIf="filteredByCategories.length > 0">
+      <div *ngFor="let post of filteredByCategories">
+        <app-post-preview [post]="post"></app-post-preview>
+      </div>
     </div>
   </section>
 </app-app-container>
