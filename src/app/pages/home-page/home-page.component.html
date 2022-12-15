@@ -1,8 +1,10 @@
 <app-app-container>
   <section class="py-5 text-center container ">
     <app-hello-message [userName]="user.name"></app-hello-message>
-    <div *ngFor="let category of categories">
-      <app-category-card [category]="category.name"></app-category-card>
+    <div class="container-fluid d-flex overflow-scroll gap-2 justify-content-center">
+      <div *ngFor="let category of categories">
+        <app-category-card [category]="category.name"></app-category-card>
+      </div>
     </div>
 
     <p *ngIf="noPost != ''; postList">{{noPost}}</p>
