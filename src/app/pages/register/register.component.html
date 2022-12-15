@@ -1,32 +1,36 @@
+<a (click)="previousePage()"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512 " width="30" height="30">
+  <path fill="#009BD3"
+        d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l192 192c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 278.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-192 192z" />
+</svg></a>
+
 <body class="text-center">
 
 <main class="form-register">
   <form #frm="ngForm"
         (ngSubmit)="onSubmit(frm)">
     <img class="mb-4" src="./assets/logo.svg" alt="" width="72" height="57">
-    <h1 class="h3 mb-3 fw-normal">Sing up</h1>
+    <h1 class="h3 mb-3 fw-normal">Sign up</h1>
 
     <span *ngIf="frm.submitted" class="text-danger">{{errorMessage}}</span>
 
     <div class="form-floating">
       <input type="text" class="form-control" required [(ngModel)]="user.name" name="name">
-      <span *ngIf="frm.submitted && frm.controls['name'].errors" class="text-danger">The name is required</span>
-      <label>Full name</label>
+      <span *ngIf="frm.submitted && frm.controls['name'].errors" class="text-danger">Full name is required.</span>
+      <label>Full Name</label>
     </div>
     <div class="form-floating">
       <input type="text" class="form-control" required [(ngModel)]="user.user" name="user">
-      <span *ngIf="frm.submitted && frm.controls['user'].errors" class="text-danger">The username is required</span>
+      <span *ngIf="frm.submitted && frm.controls['user'].errors" class="text-danger">Username is required.</span>
       <label>Username</label>
     </div>
     <div class="form-floating">
       <input type="password" class="form-control" required [(ngModel)]="user.pass" name="pass">
-      <span *ngIf="frm.submitted && frm.controls['pass'].errors" class="text-danger">The password is required</span>
+      <span *ngIf="frm.submitted && frm.controls['pass'].errors" class="text-danger">Password is required.</span>
       <label>Password</label>
     </div>
     <button class="w-100 btn btn-lg btn-primary" type="submit">Register</button>
-    <p class="mt-5 mb-3 text-muted">&copy; 2017–2021</p>
+    <p class="mt-5 mb-3 text-muted">&copy; 2022</p>
   </form>
 </main>
-
 
 </body>

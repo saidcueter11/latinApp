@@ -1,3 +1,5 @@
+<div class="w-100 pt-4 px-2 fixed-top bg-white d-flex">
+</div>
 <body class="text-center">
 
 <main class="form-signin">
@@ -9,18 +11,18 @@
     <span *ngIf="frm.submitted" class="text-danger">{{errorMessage}}</span>
     <div class="form-floating">
       <input type="text" class="form-control" [(ngModel)]="user.user" name="user" required>
-      <span *ngIf="frm.submitted && frm.controls['user'].errors" class="text-danger">The username is required</span>
+      <span *ngIf="frm.submitted && frm.controls['user'].errors" class="text-danger">Username is required.</span>
       <label>Username</label>
     </div>
     <div class="form-floating">
       <input type="password" class="form-control" [(ngModel)]="user.pass" name="pass" required>
-      <span *ngIf="frm.submitted && frm.controls['user'].errors" class="text-danger">The password is required</span>
+      <span *ngIf="frm.submitted && frm.controls['user'].errors" class="text-danger">Password is required.</span>
       <label>Password</label>
     </div>
 
     <div class="checkbox mb-3">
       <label>
-        <a type="checkbox" routerLink="/register">you are not register?</a>
+        <a type="checkbox" routerLink="/register">Are you registered?</a>
       </label>
     </div>
     <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
